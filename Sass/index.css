@@ -1,0 +1,127 @@
+.header {
+  background-image: url(../Assets/background_header.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 667px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.header__logo {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 207px;
+}
+.header__slogan {
+  color: #FFD15B;
+  font-size: 44px;
+  font-weight: 400;
+  font-family: "Anton", sans-serif;
+  text-align: center;
+}
+.header__search {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 11px;
+}
+.header__search__input {
+  border: none;
+  padding: 10px;
+  width: 954px;
+  font-size: 24px;
+  outline: none;
+}
+.header__search__input::-moz-placeholder {
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Manrope", sans-serif;
+  color: #7A7A7A;
+  border: none;
+}
+.header__search__input::placeholder {
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Manrope", sans-serif;
+  color: #7A7A7A;
+  border: none;
+}
+.header__search__button {
+  background-color: #1B1B1B;
+  height: 51px;
+  width: 51px;
+  border-radius: 10px;
+  border: none;
+}
+.header__search__button__icon {
+  color: #ffffff;
+  font-size: 26px;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: #EDEDED;
+}
+.main__card {
+  background-color: #ffffff;
+  width: 25%;
+  height: 731px;
+  border-radius: 21px;
+  margin: 50px 25px;
+}
+.main__card__img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 253px;
+  border-radius: 21px 21px 0 0;
+}
+.main__card__description {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 0 50px;
+}
+.main__card__description__title {
+  font-weight: 400;
+  font-family: "Anton", sans-serif;
+  margin: 0;
+  margin-top: 25px;
+}
+.main__card__description__recipe__text {
+  max-height: 75px;
+  overflow: hidden;
+}
+.main__card__description__recipe__title {
+  color: #7A7A7A;
+  font-family: "Manrope", sans-serif;
+}
+.main__card__description__ingredient {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.main__card__description__ingredient__title {
+  width: 100%;
+  color: #7A7A7A;
+  font-family: "Manrope", sans-serif;
+}
+.main__card__description__ingredient__tags {
+  margin-bottom: 15px;
+  width: 35%;
+}
+.main__card__description__ingredient__tags__type {
+  margin: 0;
+}
+.main__card__description__ingredient__tags__quantity {
+  margin: 0;
+  color: #7A7A7A;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  padding-top: 5px;
+}/*# sourceMappingURL=index.css.map */

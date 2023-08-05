@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Sass/normalize.css">
+    <link rel="stylesheet" href="./Sass/index.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <title>Les petits plats</title>
+</head>
+
+<body>
+    <header class="header">
+        <img class="header__logo" src="./Assets/Logo.svg" alt="Logo Les petits plats">
+        <h2 class="header__slogan">CHERCHEZ PARMI PLUS DE 1500 RECETTES<br> DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h2>
+        <div class="header__search">
+            <input class="header__search__input" type="text" placeholder="Rechercher une recette, un ingrédient, ...">
+            <button class="header__search__button"><i
+                    class="fa-solid fa-magnifying-glass header__search__button__icon"></i></button>
+        </div>
+    </header>
+    
+    <main id="main" class="main"></main>
+
+    <!-- Font awasome icônes -->
+    <script src="https://kit.fontawesome.com/66a5799a6b.js" crossorigin="anonymous"></script>
+    <script src="./Data/recipes.js"></script>
+    <script type="module" src="./index.js"></script>
+</body>
+
+</html>

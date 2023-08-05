@@ -1,0 +1,140 @@
+.header {
+    background-image: url(../Assets/background_header.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 667px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__logo {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        width: 207px;
+    }
+
+    &__slogan {
+        color: $yellow;
+        font-size: 44px;
+        font-weight: 400;
+        font-family: $Anton, $DefaultFont;
+        text-align: center;
+    }
+
+    &__search {
+        background-color: $white;
+        padding: 15px;
+        border-radius: 11px;
+
+        &__input {
+            border: none;
+            padding: 10px;
+            width: 954px;
+            font-size: 24px;
+            outline: none;
+
+            &::placeholder {
+                font-size: 24px;
+                font-weight: 400;
+                font-family: $Manrope, $DefaultFont ;
+                color: $grey;
+                border: none;
+            }
+        }
+
+        &__button {
+            background-color: $black;
+            height: 51px;
+            width: 51px;
+            border-radius: 10px;
+            border: none;
+
+            &__icon {
+                color: $white;
+                font-size: 26px;
+            }
+        }
+    }
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: $mainBackground ;
+
+    &__card {
+        background-color: $white;
+        width: 25%;
+        height: 731px;
+        border-radius: 21px;
+        margin: 50px 25px;
+
+        &__img {
+            object-fit: cover;
+            width: 100%;
+            height: 253px;
+            border-radius: 21px 21px 0 0;
+        }
+
+        &__description {
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            padding: 0 50px;
+
+            &__title {
+                font-weight: 400;
+                font-family: $Anton, $DefaultFont;
+                margin: 0;
+                margin-top: 25px;
+            }
+
+            &__recipe {
+                &__text {
+                    max-height: 75px;
+                    overflow: hidden;
+                }
+
+                &__title {
+                    color: $grey;
+                    font-family: $Manrope, $DefaultFont ;
+                }
+            }
+
+            &__ingredient {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                &__title {
+                    width: 100%;
+                    color: $grey;
+                    font-family: $Manrope, $DefaultFont ;
+                }
+
+                &__tags {
+                    margin-bottom: 15px;
+                    width: 35%;
+
+                    &__type {
+                        margin: 0;
+                    }
+
+                    &__quantity {
+                        margin: 0;
+                        color: $grey;
+                        font-family: $Manrope, $DefaultFont ;
+                        font-size: 14px;
+                        padding-top: 5px;
+                    }
+                }
+            }
+        }
+
+    }
+}
