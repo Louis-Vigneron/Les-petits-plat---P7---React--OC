@@ -63,16 +63,17 @@
 .main {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   background-color: #EDEDED;
+  padding: 0 75px;
 }
 .main__card {
   background-color: #ffffff;
-  width: 25%;
+  width: 26%;
   height: 731px;
   border-radius: 21px;
-  margin: 50px 25px;
+  margin: 50px 0;
 }
 .main__card__img {
   -o-object-fit: cover;
@@ -140,17 +141,17 @@
 }
 .main__sort {
   display: flex;
-  margin-top: 50px;
-  height: 61px;
+  flex-direction: column;
+  font-family: "Manrope";
+  margin-right: 50px;
 }
 .main__sort__button {
   border: none;
-  background-color: #901C1C;
-  color: white;
+  background-color: #ffffff;
+  height: 61px;
   font-size: 18px;
   font-weight: 700;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2509803922);
   padding: 20px 25px;
   padding-right: 15px;
   width: 200px;
@@ -158,10 +159,10 @@
   cursor: pointer;
 }
 .main__sort__list {
-  background-color: #901C1C;
-  font-size: 18px;
+  height: 315px;
+  font-size: 14px;
   font-weight: 700;
-  color: white;
+  background-color: #ffffff;
   width: 170px;
   padding: 15px;
   border-radius: 5px;
@@ -169,36 +170,50 @@
   margin: 0;
   display: none;
   position: absolute;
-  left: 195px;
   z-index: 1;
+  overflow: hidden;
 }
 .main__sort__list__select {
-  background-color: #901C1C;
+  list-style: none;
   font-size: 18px;
   font-weight: 700;
-  color: white;
   border: none;
-  padding: 10px;
   padding-bottom: 20px;
   cursor: pointer;
   width: 100%;
   text-align: start;
 }
+.main__recipes {
+  flex-grow: 1;
+  text-align: end;
+  font-size: 21px;
+  font-family: "Anton";
+  font-weight: 400;
+}
+
+.nextTo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 50px;
+}
+
 .fa-chevron-up {
   position: relative;
+  height: 0;
   top: 25px;
-  left: 150px;
-  color: white;
+  right: 50px;
   font-size: 18px;
   font-weight: 700;
-  z-index: 2;
+  z-index: -1;
 }
 
 .fa-chevron-down {
   position: relative;
-  top: 20px;
-  right: 50px;
-  color: white;
+  height: 0;
+  bottom: 40px;
+  left: 165px;
   font-size: 18px;
   font-weight: 700;
 }/*# sourceMappingURL=index.css.map */

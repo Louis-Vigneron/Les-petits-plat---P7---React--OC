@@ -63,16 +63,17 @@
 .main {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     background-color: $mainBackground ;
+    padding:0 75px ;
 
     &__card {
         background-color: $white;
-        width: 25%;
+        width: 26%;
         height: 731px;
         border-radius: 21px;
-        margin: 50px 25px;
+        margin: 50px 0;
 
         &__img {
             object-fit: cover;
@@ -153,70 +154,88 @@
 
     &__sort{
         display: flex;
-        margin-top: 50px;
-        height: 61px;
+        flex-direction: column;      
+        font-family: $Manrope;
+        margin-right: 50px;
         &__button{
             border: none;
-            background-color: #901C1C;
-            color: white;
+            background-color: $white;
+            height: 61px;
             font-size: 18px;
             font-weight: 700;
             border-radius: 5px;
-            box-shadow: 0px 4px 4px 0px #00000040;
             padding: 20px 25px;
             padding-right: 15px;
             width: 200px;
             text-align: start;
             cursor: pointer;
         }
-        &__list{
-            background-color: #901C1C;
-            font-size: 18px;
+        &__list{            
+            height: 315px;
+            font-size: 14px;
             font-weight: 700;
-            color: white;
+            background-color: $white;
             width: 170px;
             padding: 15px;
             border-radius: 5px;
             box-shadow: 0px 4px 4px 0px #00000040;
             margin: 0;
-            display: none;
-            position: absolute;
-            left: 195px;
-            z-index: 1;
+            display: none;      
+            position: absolute;     
+            z-index: 1;         
+            overflow: hidden;
             &__select{
-                background-color: #901C1C;
+                list-style: none;
                 font-size: 18px;
-                font-weight: 700;
-                color: white;
+                font-weight: 700;                
                 border: none;
-                padding: 10px;
                 padding-bottom: 20px;
                 cursor: pointer;
                 width: 100%;
                 text-align: start;
+                
             }
         }
         &--ingrendient{
         }
+        &--appliance{
+        }
+        &--ustensils{
+        }
+    }
+
+    &__recipes{
+        flex-grow: 1;
+        text-align: end;
+        font-size: 21px;
+        font-family: $Anton;
+        font-weight: 400;
     }
 }
 
+.nextTo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;    
+    margin-top: 50px;
+}
 
 .fa-chevron-up {
     position: relative;
+    height: 0;
     top: 25px;
-    left: 150px;
-    color: white;
+    right: 50px;
     font-size: 18px;
     font-weight: 700;
-    z-index: 2;
+    z-index: -1;
 }
 
 .fa-chevron-down {
     position: relative;
-    top: 20px;
-    right: 50px;
-    color: white;
+    height: 0;
+    bottom: 40px;
+    left: 165px;
     font-size: 18px;
     font-weight: 700;
 }

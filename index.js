@@ -3,38 +3,15 @@ import recipes from './Data/recipes.js';
 function recoveryRecipes() {
 
     const main = document.getElementById("main");
+    const totalRecipes = document.getElementById("totalRecipes")
 
     let ingredients = [];
     let appliance = [];
     let ustensils = [];
-
-    main.innerHTML = `
-    <div class="main__sort main__sort--ingredient">
-        <button class="main__sort__button" aria-haspopup="listbox" role="button" id="test">Ingrédients</button><i class="fa-solid fa-chevron-down"></i>
-        <ul class="main__sort__list" id="ingredients" aria-expanded="false">                  
-        </ul>
-        <i class="fa-solid fa-chevron-up"></i>
-    </div>
-
-    <div class="main__sort main__sort--appliance">
-        <button class="main__sort__button" aria-haspopup="listbox" role="button">Appareils</button><i class="fa-solid fa-chevron-down"></i>
-        <ul class="main__sort__list" id="appliance" aria-expanded="false">                  
-        </ul>
-        <i class="fa-solid fa-chevron-up"></i>
-    </div>
-
-    <div class="main__sort main__sort--ustensils">
-        <button class="main__sort__button" aria-haspopup="listbox" role="button" >Ustensiles</button><i class="fa-solid fa-chevron-down"></i>
-        <ul class="main__sort__list" id="ustensils" aria-expanded="false">                  
-        </ul>
-        <i class="fa-solid fa-chevron-up"></i>
-    </div>
-    `
-
+ 
+    totalRecipes.textContent =`${recipes.length} recettes`
 
     recipes.forEach(el => {
-
-
         main.innerHTML +=
             `   
         <div class="main__card">
@@ -77,7 +54,7 @@ function displaySortOptions() {
             let div = el.closest(".main__sort");
             let listOptions = div.querySelector(".main__sort__list"); 
             const expanded = listOptions.getAttribute('aria-expanded') === 'true';    
-            const arrowDown = el.nextElementSibling;   
+            const arrowDown = el.nextElementSibling;              
             listOptions.setAttribute('aria-expanded', !expanded);
             listOptions.style.display = expanded ? 'none' : 'block';
             arrowDown.style.display = "none";

@@ -26,12 +26,42 @@
                     class="fa-solid fa-magnifying-glass header__search__button__icon"></i></button>
         </div>
     </header>
-    
-    <main id="main" class="main"></main>
+
+    <main id="main" class="main">
+        <div class="nextTo">
+            <div class="main__sort main__sort--ingredient">
+                <button class="main__sort__button" aria-haspopup="listbox" role="button"
+                    id="test">Ingrédients</button>
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <i class="fa-solid fa-chevron-up"></i>
+                <ul class="main__sort__list" id="ingredients" aria-expanded="false">
+                </ul>
+                
+            </div>
+
+            <div class="main__sort main__sort--appliance">
+                <button class="main__sort__button" aria-haspopup="listbox" role="button">Appareils</button>
+                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-chevron-up"></i>
+                <ul class="main__sort__list" id="appliance" aria-expanded="false">
+                </ul>
+                
+            </div>
+
+            <div class="main__sort main__sort--ustensils">
+                <button class="main__sort__button" aria-haspopup="listbox" role="button">Ustensiles</button>
+                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-chevron-up"></i>
+                <ul class="main__sort__list" id="ustensils" aria-expanded="false">
+                </ul>                
+            </div>
+            <p id="totalRecipes" class="main__recipes"></p>
+        </div>
+    </main>
 
     <!-- Font awasome icônes -->
     <script src="https://kit.fontawesome.com/66a5799a6b.js" crossorigin="anonymous"></script>
-    <script src="./Data/recipes.js"></script>
+    <script type="module" src="./Data/recipes.js"></script>
     <script type="module" src="./index.js"></script>
 </body>
 
