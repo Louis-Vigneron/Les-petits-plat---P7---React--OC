@@ -8,8 +8,8 @@ function recoveryRecipes() {
     let ingredients = [];
     let appliance = [];
     let ustensils = [];
- 
-    totalRecipes.textContent =`${recipes.length} recettes`
+
+    totalRecipes.textContent = `${recipes.length} recettes`
 
     recipes.forEach(el => {
         main.innerHTML +=
@@ -48,16 +48,14 @@ function recoveryRecipes() {
 }
 
 function displaySortOptions() {
-    const button = document.querySelectorAll('.main__sort__button');     
+    const button = document.querySelectorAll('.main__sort__button');
     button.forEach(el => {
         el.addEventListener("click", () => {
             let div = el.closest(".main__sort");
-            let listOptions = div.querySelector(".main__sort__list"); 
-            const expanded = listOptions.getAttribute('aria-expanded') === 'true';    
-            const arrowDown = el.nextElementSibling;              
+            let listOptions = div.querySelector(".main__sort__list");
+            const expanded = listOptions.getAttribute('aria-expanded') === 'true';         
             listOptions.setAttribute('aria-expanded', !expanded);
             listOptions.style.display = expanded ? 'none' : 'block';
-            arrowDown.style.display = "none";
         })
     })
 
@@ -108,9 +106,8 @@ function sortList(array, types, type) {
         }
 
     })
-
     array.forEach(el => {
-        sort.innerHTML += `<li class="main__sort__list__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
+        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
     })
 }
 
