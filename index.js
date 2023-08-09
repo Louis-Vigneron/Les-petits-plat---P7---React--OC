@@ -11,7 +11,7 @@ function recoveryRecipes() {
 
     totalRecipes.textContent = `${recipes.length} recettes`
 
-    /*  recipes.forEach(el => {
+      recipes.forEach(el => {
          main.innerHTML +=
              `   
          <div class="main__card">
@@ -36,7 +36,7 @@ function recoveryRecipes() {
              </div>
          </div>    
      `
-     }); */
+     });
 
     sortList(ingredients, 'ingredients', 'ingredient');
     sortList(appliance, 'appliance', '');
