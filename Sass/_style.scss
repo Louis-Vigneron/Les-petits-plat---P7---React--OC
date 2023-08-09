@@ -63,11 +63,13 @@
             width: 51px;
             border-radius: 10px;
             border: none;
-
-            &__icon {
-                color: $white;
-                font-size: 26px;
-            }
+            color: $white;
+            font-size: 26px;
+            &:hover{
+                background-color: $yellow;
+                color: $black;
+                
+            }            
         }
     }
 }
@@ -171,39 +173,55 @@
         flex-direction: column;
         font-family: $Manrope;
         margin-right: 50px;
-        position: relative;
-
-        &__button {
+        position: relative;           
+        &__button {           
             border: none;
             background-color: $white;
             height: 61px;
             font-size: 18px;
             font-weight: 700;
-            border-radius: 5px;
             padding: 20px 25px;
-            padding-right: 15px;
+            padding-right: 15px; 
             width: 200px;
             text-align: start;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-radius: 11px; 
         }
-
         &__list {
             display: none;
             height: 315px;
             font-weight: 700;
             background-color: $white;
-            width: 170px;
-            padding: 15px;
+            width: 200px;
             padding-top: 0;
-            border-radius: 5px;
             box-shadow: 0px 4px 4px 0px #00000040;
             position: absolute;
             z-index: 1;
+            top: 61px;
             overflow: hidden;
+            border-radius: 0 0 11px 11px; 
 
+            &__select{
+                &__option{
+                    background-color: $yellow;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    margin: 5px 0;
+                    font-weight: 400;
+                    font-family: $Manrope;
+                    &:hover{
+                        font-weight: 700;
+                        .closeOptionSelect--list{
+                            color: $black;
+                        }
+                    }
+                }
+            }
             &__title {
                 height: 61px;
                 font-size: 18px;
@@ -212,12 +230,12 @@
                 justify-content: space-between;
                 align-items: center;
                 margin: 0;
+                padding-left: 10px;
             }
 
             &__ul {
                 margin: 0;
-                padding: 0;
-
+                padding: 15px;
                 &__select {
                     font-size: 14px;
                     list-style: none;
@@ -236,8 +254,7 @@
                 align-items: center;
                 justify-content: space-between;
                 margin-bottom: 25px;
-                padding: 5px;
-
+                margin: 15px;
                 &__input {
                     border: none;
                     outline: none;
@@ -281,6 +298,26 @@
         font-family: $Anton;
         font-weight: 400;
     }
+
+    &__selected{
+        width: 100%;
+        display: flex;        
+        &__option{
+            width: 203px;
+            margin-right: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $yellow;
+            border-radius: 10px;
+            font-family: $Manrope;     
+            font-weight: 400;       
+            padding: 18px;
+            i {
+                font-size: 20px;
+            }            
+        }
+    }
 }
 
 .nextTo {
@@ -295,4 +332,8 @@
 .fa-chevron-down {
     font-size: 18px;
     font-weight: 700;
+}
+
+.closeOptionSelect--list{
+    color: $yellow;
 }

@@ -64,10 +64,12 @@
   width: 51px;
   border-radius: 10px;
   border: none;
-}
-.header__search__button__icon {
   color: #ffffff;
   font-size: 26px;
+}
+.header__search__button:hover {
+  background-color: #FFD15B;
+  color: #1B1B1B;
 }
 
 .main {
@@ -163,7 +165,6 @@
   height: 61px;
   font-size: 18px;
   font-weight: 700;
-  border-radius: 5px;
   padding: 20px 25px;
   padding-right: 15px;
   width: 200px;
@@ -172,20 +173,37 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 11px;
 }
 .main__sort__list {
   display: none;
   height: 315px;
   font-weight: 700;
   background-color: #ffffff;
-  width: 170px;
-  padding: 15px;
+  width: 200px;
   padding-top: 0;
-  border-radius: 5px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2509803922);
   position: absolute;
   z-index: 1;
+  top: 61px;
   overflow: hidden;
+  border-radius: 0 0 11px 11px;
+}
+.main__sort__list__select__option {
+  background-color: #FFD15B;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 5px 0;
+  font-weight: 400;
+  font-family: "Manrope";
+}
+.main__sort__list__select__option:hover {
+  font-weight: 700;
+}
+.main__sort__list__select__option:hover .closeOptionSelect--list {
+  color: #1B1B1B;
 }
 .main__sort__list__title {
   height: 61px;
@@ -195,10 +213,11 @@
   justify-content: space-between;
   align-items: center;
   margin: 0;
+  padding-left: 10px;
 }
 .main__sort__list__ul {
   margin: 0;
-  padding: 0;
+  padding: 15px;
 }
 .main__sort__list__ul__select {
   font-size: 14px;
@@ -216,7 +235,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 25px;
-  padding: 5px;
+  margin: 15px;
 }
 .main__sort__list__search__input {
   border: none;
@@ -246,6 +265,25 @@
   font-family: "Anton";
   font-weight: 400;
 }
+.main__selected {
+  width: 100%;
+  display: flex;
+}
+.main__selected__option {
+  width: 203px;
+  margin-right: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFD15B;
+  border-radius: 10px;
+  font-family: "Manrope";
+  font-weight: 400;
+  padding: 18px;
+}
+.main__selected__option i {
+  font-size: 20px;
+}
 
 .nextTo {
   display: flex;
@@ -259,4 +297,8 @@
 .fa-chevron-down {
   font-size: 18px;
   font-weight: 700;
+}
+
+.closeOptionSelect--list {
+  color: #FFD15B;
 }/*# sourceMappingURL=index.css.map */

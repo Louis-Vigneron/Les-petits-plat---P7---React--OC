@@ -28,17 +28,16 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <button class="header__search__button">
-                <i class="fa-solid fa-magnifying-glass header__search__button__icon"></i></button>
+                <i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </header>
 
     <main id="main" class="main">
         <div class="nextTo">
             <div class="main__sort main__sort--ingredient">
-                <button class="main__sort__button" aria-haspopup="listbox" role="button" id="test">Ingrédients <i
+                <button class="main__sort__button" aria-haspopup="listbox" role="button">Ingrédients <i
                         class="fa-solid fa-chevron-down"></i></button>
                 <div class="main__sort__list">
-                    <h2 class="main__sort__list__title">Ingrédients<i class="fa-solid fa-chevron-up"></i></h2>
                     <form class="main__sort__list__search">
                         <label for="search"></label>
                         <input class="main__sort__list__search__input" type="text">
@@ -49,6 +48,7 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
+                    <div class="main__sort__list__select"></div>
                     <ul class="main__sort__list__ul" id="ingredients" aria-expanded="false">
                     </ul>
                 </div>
@@ -56,10 +56,9 @@
             </div>
 
             <div class="main__sort main__sort--appliance">
-                <button class="main__sort__button" aria-haspopup="listbox" role="button" id="test">Appareils <i
+                <button class="main__sort__button" aria-haspopup="listbox" role="button">Appareils <i
                         class="fa-solid fa-chevron-down"></i> </button>
                 <div class="main__sort__list">
-                    <h2 class="main__sort__list__title">Appareils<i class="fa-solid fa-chevron-up"></i></h2>
                     <form class="main__sort__list__search">
                         <label for="search"></label>
                         <input class="main__sort__list__search__input" type="text">
@@ -70,6 +69,7 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
+                    <div class="main__sort__list__select"></div>
                     <ul class="main__sort__list__ul" id="appliance" aria-expanded="false">
                     </ul>
                 </div>
@@ -77,10 +77,9 @@
             </div>
 
             <div class="main__sort main__sort--ustensils">
-                <button class="main__sort__button" aria-haspopup="listbox" role="button" id="test">Ustensiles <i
+                <button class="main__sort__button" aria-haspopup="listbox" role="button">Ustensiles <i
                         class="fa-solid fa-chevron-down"></i> </button>
                 <div class="main__sort__list">
-                    <h2 class="main__sort__list__title">Ustensiles<i class="fa-solid fa-chevron-up"></i></h2>
                     <form class="main__sort__list__search">
                         <label for="search"></label>
                         <input class="main__sort__list__search__input" type="text">
@@ -91,6 +90,7 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
+                    <div class="main__sort__list__select"></div>
                     <ul class="main__sort__list__ul" id="ustensils" aria-expanded="false">
                     </ul>
                 </div>
@@ -99,6 +99,7 @@
 
             <p id="totalRecipes" class="main__recipes"></p>
         </div>
+        <div class="main__selected" id="selectedOption"></div>
     </main>
 
     <!-- Font awasome icônes -->

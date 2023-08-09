@@ -36,15 +36,13 @@ function recoveryRecipes() {
             </div>
         </div>    
     `
-
     });
 
     sortList(ingredients, 'ingredients', 'ingredient');
     sortList(appliance, 'appliance', '');
     sortList(ustensils, 'ustensils', '');
     displaySortOptions();
-    //selectSortOption();
-
+    selectSortOption();
 }
 
 function displaySortOptions() {
@@ -53,36 +51,40 @@ function displaySortOptions() {
         el.addEventListener("click", () => {
             let div = el.closest(".main__sort");
             let listOptions = div.querySelector(".main__sort__list");
-            const expanded = listOptions.getAttribute('aria-expanded') === 'true';         
+            let arrowDown = el.closest("button");
+            const expanded = listOptions.getAttribute('aria-expanded') === 'true';
+            arrowDown.style.borderRadius = expanded ? '11px' : '11px 11px 0 0';
             listOptions.setAttribute('aria-expanded', !expanded);
             listOptions.style.display = expanded ? 'none' : 'block';
+            arrowDown.innerHTML = expanded ? ` ${arrowDown.textContent} <i
+            class="fa-solid fa-chevron-down"></i>` : `  ${arrowDown.textContent} <i
+            class="fa-solid fa-chevron-up"></i>`
         })
     })
 
 
 }
 
-/* function selectSortOption() {
-    const listOptions = document.getElementById('ingredients');
+function selectSortOption() {
     const options = document.querySelectorAll('[role="listbox"]');
-    const button = document.getElementById('test');
-    const arrowDown = document.querySelector('.fa-chevron-down');
-    const expanded = listOptions.getAttribute('aria-expanded') === 'false';
+    const displayOption = document.getElementById('selectedOption')
     options.forEach(el => {
         el.addEventListener("click", () => {
+            let listOptions = el.closest("ul");
             options.forEach(els => {
                 els.setAttribute('aria-selected', "false");
             })
             listOptions.setAttribute('aria-expanded', "true");
             el.setAttribute('aria-selected', "true");
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
-            button.textContent = selectedOption;
-            listOptions.style.display = expanded ? 'none' : 'block';
-            button.style.display = "block";
-            arrowDown.style.display = "block";
+            let displayOptionList = listOptions.previousElementSibling;
+            displayOptionList.innerHTML += `<p class="main__sort__list__select__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-circle-xmark closeOptionSelect closeOptionSelect--list"></i></i></p>`;
+            displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;            
+            cleanOptionSelect();
         })
     });
-} */
+    
+}
 
 function sortList(array, types, type) {
     const sort = document.getElementById(types);
@@ -111,4 +113,16 @@ function sortList(array, types, type) {
     })
 }
 
+function cleanOptionSelect() {
+    let button = document.querySelectorAll(".closeOptionSelect");      
+    button.forEach(el => {
+        el.addEventListener("click", () => {
+             let selectRemoveOption = el.closest("p");
+             let removeOption = document.querySelectorAll(`[data-custom-value="${selectRemoveOption.dataset.customValue}"]`);     
+             removeOption.forEach(el=>{
+                el.remove()
+             })
+        })
+    })
+}
 recoveryRecipes()
