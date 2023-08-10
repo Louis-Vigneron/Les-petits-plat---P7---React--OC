@@ -1,22 +1,22 @@
 import recipes from './Data/recipes.js';
 
 
-function recoveryRecipes() {   
+function recoveryRecipes() {
 
     let ingredients = [];
     let appliance = [];
     let ustensils = [];
-    
+
     generateCardRecipe(recipes);
     sortList(ingredients, 'ingredients', 'ingredient');
     sortList(appliance, 'appliance', '');
     sortList(ustensils, 'ustensils', '');
     algo(ingredients, 'searchIngredients', 'ingredients');
-    algo(appliance, 'searchAppliance','appliance');
-    algo(ustensils, 'searchUstensils', 'ustensils');    
+    algo(appliance, 'searchAppliance', 'appliance');
+    algo(ustensils, 'searchUstensils', 'ustensils');
     displaySortOptions();
-    selectSortOption();    
-    displayCardRecipes(main);
+    selectSortOption();
+    generateCardRecipe(recipes);
 }
 
 function displaySortOptions() {
@@ -65,7 +65,7 @@ function selectSortOption() {
 }
 
 function sortList(array, types, type) {
-    
+
     recipes.forEach(els => {
         if (Array.isArray(els[types])) {
             els[types].forEach(el => {
@@ -84,8 +84,8 @@ function sortList(array, types, type) {
                 array.push(els[types])
             }
         }
-    })    
-    displaySortList(array, types)   
+    })
+    displaySortList(array, types)
 }
 
 function cleanOptionSelect() {
@@ -102,41 +102,41 @@ function cleanOptionSelect() {
     })
 }
 
-function displaySortList(array, id){
-    const sort = document.getElementById(id);      
-    sort.innerHTML ='';
+function displaySortList(array, id) {
+    const sort = document.getElementById(id);
+    sort.innerHTML = '';
     array.forEach(el => {
         sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
     })
 }
 
-function algo(array, id, idList){
-    const mainResearch = document.getElementById(id)    
-    let filterArray = [];
-    mainResearch.addEventListener("input",()=>{     
-         if(mainResearch.value.length > 2){                   
-             if(array.filter(e => e.includes(mainResearch.value))){ 
+function algo(array, id, idList) {
+    const mainResearch = document.getElementById(id)
+    let filterArray = '';
+    mainResearch.addEventListener("input", () => {
+        if (mainResearch.value.length > 2) {
+            if (array.filter(e => e.includes(mainResearch.value))) {
                 filterArray = array.filter(e => e.includes(mainResearch.value));
-                displaySortList(filterArray, idList);   
-                displayCardRecipes(filterArray)            
-            } 
+                displaySortList(filterArray, idList);
+                displayCardRecipes(filterArray)
+            }
         } else {
-            displaySortList(array, idList);            
+            displaySortList(array, idList);
             generateCardRecipe(recipes)
-        }   
-        selectSortOption();      
-    })    
-        
+        }
+        selectSortOption();
+    })
+
 }
 
-function generateCardRecipe(array){
-    const cardPlace = document.getElementById("recipesCard");        
+function generateCardRecipe(array) {
+    const cardPlace = document.getElementById("recipesCard");
     const totalRecipes = document.getElementById("totalRecipes");
     totalRecipes.textContent = `${array.length} recettes`;
-    cardPlace.innerHTML =""
+    cardPlace.innerHTML = ""
     array.forEach(el => {
         cardPlace.innerHTML +=
-              `   
+            `   
            <div class="main__recipes__card">
                <img class="main__recipes__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
                <div class="main__recipes__card__time">${el.time} min</div>
@@ -149,37 +149,49 @@ function generateCardRecipe(array){
                    <div class="main__recipes__card__description__ingredient">
                        <h3 class="main__recipes__card__description__ingredient__title">INGRÉDIENTS</h3>     
                        ${el.ingredients.map((ingredient) =>
-                  `   <div class="main__recipes__card__description__ingredient__tags">
+                `   <div class="main__recipes__card__description__ingredient__tags">
                                    <p class="main__recipes__card__description__ingredient__tags__type">${ingredient.ingredient}</p>
                                    <p class="main__recipes__card__description__ingredient__tags__quantity">${ingredient.quantity ? ingredient.quantity : '-'} ${ingredient.unit ? ingredient.unit : ''}</p>
                                </div>
                                `).join('')
-              }       
+            }       
                    </div>
                </div>
            </div>    
-       ` 
-      });  
+       `
+    });
 }
 
-function displayCardRecipes(filterArray){
+function displayCardRecipes(filterArray) {
     let test = [];
+    let a = [];
     recipes.forEach(els => {
-        els.ingredients.forEach(el =>{
-            if(el.ingredient.includes(filterArray[0])){
-                test.push(els);
-                generateCardRecipe(test)
-            }             
+        filterArray.forEach(x => {
+            if (a.includes(els.name) == false) {
+                els.ingredients.forEach(el => {
+                    if (a.includes(els.name) == false) {
+                         if (el.ingredient.includes(x)) {
+                        test.push(els);
+                        a.push(els.name);
+                        generateCardRecipe(test)
+                    }
+                    }                   
+                })
+                if (els.appliance == x) {
+                    test.push(els);
+                    a.push(els.name);
+                    generateCardRecipe(test)
+                }
+                if (els.ustensils.includes(x)) {
+                    test.push(els);
+                    a.push(els.name);
+                    generateCardRecipe(test)
+                }
+            }        
         })
-        if(els.appliance == filterArray[0]){
-            test.push(els);
-            generateCardRecipe(test)
-        }
-        if(els.ustensils.includes(filterArray[0])){
-            test.push(els);
-            generateCardRecipe(test)
-        }
+       
     })
+    console.log(a)
 }
 
 
