@@ -1,18 +1,18 @@
 import recipes from './Data/recipes.js';
 
-function recoveryRecipes() {
 
+function recoveryRecipes() {   
     const main = document.getElementById("main");
     const totalRecipes = document.getElementById("totalRecipes")
-
+    console.log(recipes[0].ingredients[3].ingredient.includes('Sucre'))
     let ingredients = [];
     let appliance = [];
     let ustensils = [];
 
     totalRecipes.textContent = `${recipes.length} recettes`
-
+    
     recipes.forEach(el => {
-        main.innerHTML +=
+      /*    main.innerHTML +=
             `   
          <div class="main__card">
              <img class="main__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
@@ -35,14 +35,17 @@ function recoveryRecipes() {
                  </div>
              </div>
          </div>    
-     `
-    });
-
+     ` */ 
+    });   
     sortList(ingredients, 'ingredients', 'ingredient');
     sortList(appliance, 'appliance', '');
     sortList(ustensils, 'ustensils', '');
+    algo(ingredients, 'searchIngredients', 'ingredients');
+    algo(appliance, 'searchAppliance','appliance');
+    algo(ustensils, 'searchUstensils', 'ustensils');    
     displaySortOptions();
-    selectSortOption();
+    selectSortOption();    
+    displayCardRecipes(main);
 }
 
 function displaySortOptions() {
@@ -85,15 +88,13 @@ function selectSortOption() {
                 alreadySelect.push(selectedOption);
                 cleanOptionSelect();
             }
-
-
         })
     });
 
 }
 
 function sortList(array, types, type) {
-    const sort = document.getElementById(types);
+    
     recipes.forEach(els => {
         if (Array.isArray(els[types])) {
             els[types].forEach(el => {
@@ -112,11 +113,8 @@ function sortList(array, types, type) {
                 array.push(els[types])
             }
         }
-
-    })
-    array.forEach(el => {
-        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
-    })
+    })    
+    displaySortList(array, types)   
 }
 
 function cleanOptionSelect() {
@@ -132,4 +130,52 @@ function cleanOptionSelect() {
         })
     })
 }
+
+function displaySortList(array, id){
+    const sort = document.getElementById(id);      
+    sort.innerHTML ='';
+    array.forEach(el => {
+        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
+    })
+}
+
+function algo(array, id, idList){
+    const mainResearch = document.getElementById(id)    
+    let filterArray = [];
+    mainResearch.addEventListener("input",()=>{     
+         if(mainResearch.value.length > 2){                   
+             if(array.filter(e => e.includes(mainResearch.value))){ 
+                filterArray = array.filter(e => e.includes(mainResearch.value));
+                displaySortList(filterArray, idList);   
+                displayCardRecipes(filterArray)            
+            } 
+        } else {
+            displaySortList(array, idList);
+        }   
+        selectSortOption();      
+    })    
+        
+}
+
+function displayCardRecipes(filterArray){
+    const main = document.getElementById("main");
+    recipes.forEach(els => {
+        els.ingredients.forEach(el =>{
+            if(el.ingredient.includes(filterArray[0])){
+                console.log("i")
+            }             
+        })
+        if(els.appliance == filterArray[0]){
+            console.log("o")
+        }
+        if(els.ustensils.includes(filterArray[0])){
+            console.log("a")
+        }
+    })
+    
+}
+
+
+
 recoveryRecipes()
+
