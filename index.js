@@ -2,41 +2,12 @@ import recipes from './Data/recipes.js';
 
 
 function recoveryRecipes() {   
-    const main = document.getElementById("main");
-    const totalRecipes = document.getElementById("totalRecipes")
-    console.log(recipes[0].ingredients[3].ingredient.includes('Sucre'))
+
     let ingredients = [];
     let appliance = [];
     let ustensils = [];
-
-    totalRecipes.textContent = `${recipes.length} recettes`
     
-    recipes.forEach(el => {
-      /*    main.innerHTML +=
-            `   
-         <div class="main__card">
-             <img class="main__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
-             <div class="main__card__time">${el.time} min</div>
-             <div class="main__card__description">
-                 <h2 class="main__card__description__title">${el.name}</h2>
-                 <div class="main__card__description__recipe">
-                     <h3 class="main__card__description__recipe__title">RECETTE</h3>
-                     <p class="main__card__description__recipe__text">${el.description}</p>
-                 </div>
-                 <div class="main__card__description__ingredient">
-                     <h3 class="main__card__description__ingredient__title">INGRÉDIENTS</h3>     
-                     ${el.ingredients.map((ingredient) =>
-                `   <div class="main__card__description__ingredient__tags">
-                                 <p class="main__card__description__ingredient__tags__type">${ingredient.ingredient}</p>
-                                 <p class="main__card__description__ingredient__tags__quantity">${ingredient.quantity ? ingredient.quantity : '-'} ${ingredient.unit ? ingredient.unit : ''}</p>
-                             </div>
-                             `).join('')
-            }       
-                 </div>
-             </div>
-         </div>    
-     ` */ 
-    });   
+    generateCardRecipe(recipes);
     sortList(ingredients, 'ingredients', 'ingredient');
     sortList(appliance, 'appliance', '');
     sortList(ustensils, 'ustensils', '');
@@ -150,29 +121,65 @@ function algo(array, id, idList){
                 displayCardRecipes(filterArray)            
             } 
         } else {
-            displaySortList(array, idList);
+            displaySortList(array, idList);            
+            generateCardRecipe(recipes)
         }   
         selectSortOption();      
     })    
         
 }
 
+function generateCardRecipe(array){
+    const cardPlace = document.getElementById("recipesCard");        
+    const totalRecipes = document.getElementById("totalRecipes");
+    totalRecipes.textContent = `${array.length} recettes`;
+    cardPlace.innerHTML =""
+    array.forEach(el => {
+        cardPlace.innerHTML +=
+              `   
+           <div class="main__recipes__card">
+               <img class="main__recipes__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
+               <div class="main__recipes__card__time">${el.time} min</div>
+               <div class="main__recipes__card__description">
+                   <h2 class="main__recipes__card__description__title">${el.name}</h2>
+                   <div class="main__recipes__card__description__recipe">
+                       <h3 class="main__recipes__card__description__recipe__title">RECETTE</h3>
+                       <p class="main__recipes__card__description__recipe__text">${el.description}</p>
+                   </div>
+                   <div class="main__recipes__card__description__ingredient">
+                       <h3 class="main__recipes__card__description__ingredient__title">INGRÉDIENTS</h3>     
+                       ${el.ingredients.map((ingredient) =>
+                  `   <div class="main__recipes__card__description__ingredient__tags">
+                                   <p class="main__recipes__card__description__ingredient__tags__type">${ingredient.ingredient}</p>
+                                   <p class="main__recipes__card__description__ingredient__tags__quantity">${ingredient.quantity ? ingredient.quantity : '-'} ${ingredient.unit ? ingredient.unit : ''}</p>
+                               </div>
+                               `).join('')
+              }       
+                   </div>
+               </div>
+           </div>    
+       ` 
+      });  
+}
+
 function displayCardRecipes(filterArray){
-    const main = document.getElementById("main");
+    let test = [];
     recipes.forEach(els => {
         els.ingredients.forEach(el =>{
             if(el.ingredient.includes(filterArray[0])){
-                console.log("i")
+                test.push(els);
+                generateCardRecipe(test)
             }             
         })
         if(els.appliance == filterArray[0]){
-            console.log("o")
+            test.push(els);
+            generateCardRecipe(test)
         }
         if(els.ustensils.includes(filterArray[0])){
-            console.log("a")
+            test.push(els);
+            generateCardRecipe(test)
         }
     })
-    
 }
 
 

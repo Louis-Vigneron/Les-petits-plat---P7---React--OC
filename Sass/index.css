@@ -80,7 +80,14 @@
   background-color: #EDEDED;
   padding: 0 75px;
 }
-.main__card {
+.main__recipes {
+  display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.main__recipes__card {
   background-color: #ffffff;
   width: 26%;
   height: 731px;
@@ -88,58 +95,58 @@
   margin: 50px 0;
   position: relative;
 }
-.main__card__img {
+.main__recipes__card__img {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
   height: 253px;
   border-radius: 21px 21px 0 0;
 }
-.main__card__description {
+.main__recipes__card__description {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   padding: 0 50px;
 }
-.main__card__description__title {
+.main__recipes__card__description__title {
   font-weight: 400;
   font-family: "Anton", sans-serif;
   margin: 0;
   margin-top: 25px;
 }
-.main__card__description__recipe__text {
+.main__recipes__card__description__recipe__text {
   height: 92px;
   overflow: hidden;
 }
-.main__card__description__recipe__title {
+.main__recipes__card__description__recipe__title {
   color: #7A7A7A;
   font-family: "Manrope", sans-serif;
 }
-.main__card__description__ingredient {
+.main__recipes__card__description__ingredient {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.main__card__description__ingredient__title {
+.main__recipes__card__description__ingredient__title {
   width: 100%;
   color: #7A7A7A;
   font-family: "Manrope", sans-serif;
 }
-.main__card__description__ingredient__tags {
+.main__recipes__card__description__ingredient__tags {
   margin-bottom: 15px;
   width: 35%;
 }
-.main__card__description__ingredient__tags__type {
+.main__recipes__card__description__ingredient__tags__type {
   margin: 0;
 }
-.main__card__description__ingredient__tags__quantity {
+.main__recipes__card__description__ingredient__tags__quantity {
   margin: 0;
   color: #7A7A7A;
   font-family: "Manrope", sans-serif;
   font-size: 14px;
   padding-top: 5px;
 }
-.main__card__time {
+.main__recipes__card__time {
   position: absolute;
   background-color: #FFD15B;
   padding: 5px 15px 5px 15px;
@@ -258,7 +265,7 @@
   background-color: #ffffff;
   color: #7A7A7A;
 }
-.main__recipes {
+.main__totalRecipes {
   flex-grow: 1;
   text-align: end;
   font-size: 21px;
