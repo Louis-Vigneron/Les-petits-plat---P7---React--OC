@@ -11,9 +11,9 @@ function recoveryRecipes() {
 
     totalRecipes.textContent = `${recipes.length} recettes`
 
-      recipes.forEach(el => {
-         main.innerHTML +=
-             `   
+    recipes.forEach(el => {
+        main.innerHTML +=
+            `   
          <div class="main__card">
              <img class="main__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
              <div class="main__card__time">${el.time} min</div>
@@ -26,17 +26,17 @@ function recoveryRecipes() {
                  <div class="main__card__description__ingredient">
                      <h3 class="main__card__description__ingredient__title">INGRÉDIENTS</h3>     
                      ${el.ingredients.map((ingredient) =>
-                 `   <div class="main__card__description__ingredient__tags">
+                `   <div class="main__card__description__ingredient__tags">
                                  <p class="main__card__description__ingredient__tags__type">${ingredient.ingredient}</p>
                                  <p class="main__card__description__ingredient__tags__quantity">${ingredient.quantity ? ingredient.quantity : '-'} ${ingredient.unit ? ingredient.unit : ''}</p>
                              </div>
                              `).join('')
-             }       
+            }       
                  </div>
              </div>
          </div>    
      `
-     });
+    });
 
     sortList(ingredients, 'ingredients', 'ingredient');
     sortList(appliance, 'appliance', '');
