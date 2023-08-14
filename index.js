@@ -133,6 +133,7 @@ function algo(array, id, idList) {
         selectSortOption();
     })
 }
+
 function generateCardRecipe(array) {
     const cardPlace = document.getElementById("recipesCard");
     const totalRecipes = document.getElementById("totalRecipes");
@@ -200,20 +201,45 @@ function displayCardRecipes(filterArray) {
 function algoMain() {
     const inputMain = document.getElementById('search');
     let x = []
-    
+    let a = []
+    let b = []
+    let c = []
     inputMain.addEventListener("input", () => {
         if (inputMain.value.length > 2) {
-            x = [] 
-            recipes.forEach(el => {              
-                let test = JSON.stringify(el).toLowerCase()                
-                if (test.includes(inputMain.value) == true) {    
-                    x.push(el);                                        
-                    generateCardRecipe(x);                   
+            x = []
+            a = []
+            b = []
+            c = []
+            recipes.forEach(el => {
+                let test = JSON.stringify(el).toLowerCase()
+                if (test.includes(inputMain.value) == true) {
+                    x.push(el);
+                    generateCardRecipe(x);
                 }
             })
+            x.forEach(els => {
+                els.ingredients.forEach(elss => {
+                    if (!a.includes(elss.ingredient)) {
+                        a.push(elss.ingredient)
+                    }
+
+                })
+                if (!b.includes(els.appliance)) {
+                    b.push(els.appliance)
+                }
+                els.ustensils.forEach(elss => {
+                    if (!c.includes(elss)) {
+                        c.push(elss)
+                    }
+                })
+            })
+            displaySortList(a, 'ingredients')
+            displaySortList(b, 'appliance')
+            displaySortList(c, 'ustensils')
         } else {
             generateCardRecipe(recipes)
         }
+
     })
 }
 
