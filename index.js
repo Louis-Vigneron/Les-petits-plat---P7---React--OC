@@ -1,6 +1,5 @@
 import recipes from './Data/recipes.js';
 
-
 function recoveryRecipes() {
 
     let ingredients = [];
@@ -38,11 +37,11 @@ function displaySortOptions() {
 
 
 }
+
 let alreadySelect = []
-function selectSortOption() {
+function selectSortOption() {   
     const options = document.querySelectorAll('[role="listbox"]');
     const displayOption = document.getElementById('selectedOption')
-
     options.forEach(el => {
         el.addEventListener("click", () => {
             let listOptions = el.closest("ul");
@@ -58,6 +57,7 @@ function selectSortOption() {
                 displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
                 alreadySelect.push(selectedOption);
                 cleanOptionSelect();
+                displayCardRecipes(alreadySelect);
             }
         })
     });
@@ -96,8 +96,13 @@ function cleanOptionSelect() {
             let removeOption = document.querySelectorAll(`[data-custom-value="${selectRemoveOption.dataset.customValue}"]`);
             alreadySelect = alreadySelect.filter((e) => e !== selectRemoveOption.dataset.customValue);
             removeOption.forEach(el => {
-                el.remove()
-            })
+                el.remove()                
+            })            
+            if (alreadySelect.length == 0){
+                generateCardRecipe(recipes);
+            } else {
+                displayCardRecipes(alreadySelect);
+            }
         })
     })
 }
@@ -112,6 +117,7 @@ function displaySortList(array, id) {
 
 function algo(array, id, idList) {
     const mainResearch = document.getElementById(id)
+
     let filterArray = '';
     mainResearch.addEventListener("input", () => {
         if (mainResearch.value.length > 2) {
@@ -122,11 +128,10 @@ function algo(array, id, idList) {
             }
         } else {
             displaySortList(array, idList);
-            generateCardRecipe(recipes)
+            generateCardRecipe(recipes);
         }
         selectSortOption();
     })
-
 }
 
 function generateCardRecipe(array) {
@@ -170,12 +175,12 @@ function displayCardRecipes(filterArray) {
             if (a.includes(els.name) == false) {
                 els.ingredients.forEach(el => {
                     if (a.includes(els.name) == false) {
-                         if (el.ingredient.includes(x)) {
-                        test.push(els);
-                        a.push(els.name);
-                        generateCardRecipe(test)
+                        if (el.ingredient.includes(x)) {
+                            test.push(els);
+                            a.push(els.name);
+                            generateCardRecipe(test)
+                        }
                     }
-                    }                   
                 })
                 if (els.appliance == x) {
                     test.push(els);
@@ -187,14 +192,11 @@ function displayCardRecipes(filterArray) {
                     a.push(els.name);
                     generateCardRecipe(test)
                 }
-            }        
+            }
         })
-       
+
     })
-    console.log(a)
 }
-
-
 
 recoveryRecipes()
 
