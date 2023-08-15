@@ -11,8 +11,9 @@ function recoveryRecipes() {
     sortList(appliance, 'appliance', '');
     sortList(ustensils, 'ustensils', '');
     algoMain();
+    resetButton();
     displaySortOptions();
-    selectSortOption();
+    selectSortOption();    
 }
 
 function displaySortOptions() {
@@ -197,7 +198,6 @@ function algoMain() {
                         generateCardRecipe(x);
                     }
                 })
-                console.log(x)
                 x.forEach(els => {
                     els.ingredients.forEach(elss => {
                         if (!a.includes(elss.ingredient)) {
@@ -214,21 +214,37 @@ function algoMain() {
                         }
                     })
                 })
-
-                displaySortList(a, 'ingredients')
-                displaySortList(b, 'appliance')
-                displaySortList(c, 'ustensils')
+                displaySortList(a, 'ingredients');
+                displaySortList(b, 'appliance');
+                displaySortList(c, 'ustensils');                   
             } else {
                 generateCardRecipe(recipes)
                 sortList(a, 'ingredients', 'ingredient');
                 sortList(b, 'appliance', '');
-                sortList(c, 'ustensils', '');
+                sortList(c, 'ustensils', '');                 
             }
-
+                selectSortOption(); 
         })
     })
 
 }
+
+function resetButton(){
+    let resetBtn = document.querySelectorAll("[type=reset]")    
+    let a = []
+    let b = []
+    let c = []
+    resetBtn.forEach(el =>{
+        el.addEventListener("click",()=>{
+            generateCardRecipe(recipes);
+            sortList(a, 'ingredients', 'ingredient');
+            sortList(b, 'appliance', '');
+            sortList(c, 'ustensils', '');
+            selectSortOption();    
+        })
+    })
+}
+
 
 recoveryRecipes()
 
