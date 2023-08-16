@@ -2,18 +2,12 @@ import recipes from './Data/recipes.js';
 
 function recoveryRecipes() {
 
-    let ingredients = [];
-    let appliance = [];
-    let ustensils = [];
-
     generateCardRecipe(recipes);
-    sortList(ingredients, 'ingredients', 'ingredient');
-    sortList(appliance, 'appliance', '');
-    sortList(ustensils, 'ustensils', '');
+    sortList(recipes);
     algoMain();
     resetButton();
     displaySortOptions();
-    selectSortOption();    
+    selectSortOption();
 }
 
 function displaySortOptions() {
@@ -55,35 +49,11 @@ function selectSortOption() {
                 displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
                 alreadySelect.push(selectedOption);
                 cleanOptionSelect();
-                displayCardRecipes(alreadySelect);
+                displayCardRecipes(alreadySelect);                
             }
         })
     });
 
-}
-
-function sortList(array, types, type) {
-
-    recipes.forEach(els => {
-        if (Array.isArray(els[types])) {
-            els[types].forEach(el => {
-                if (type == '') {
-                    if (!array.includes(el)) {
-                        array.push(el)
-                    }
-                } else {
-                    if (!array.includes(el[type])) {
-                        array.push(el[type])
-                    }
-                }
-            })
-        } else {
-            if (!array.includes(els[types])) {
-                array.push(els[types])
-            }
-        }
-    })
-    displaySortList(array, types)
 }
 
 function cleanOptionSelect() {
@@ -98,10 +68,14 @@ function cleanOptionSelect() {
             })
             if (alreadySelect.length == 0) {
                 generateCardRecipe(recipes);
+                sortList(recipes);
+
             } else {
-                displayCardRecipes(alreadySelect);
+                displayCardRecipes(alreadySelect);                
             }
+            selectSortOption()
         })
+
     })
 }
 
@@ -149,6 +123,7 @@ function generateCardRecipe(array) {
 function displayCardRecipes(filterArray) {
     let test = [];
     let a = [];
+   
     recipes.forEach(els => {
         filterArray.forEach(x => {
             if (a.includes(els.name) == false) {
@@ -158,6 +133,7 @@ function displayCardRecipes(filterArray) {
                             test.push(els);
                             a.push(els.name);
                             generateCardRecipe(test)
+                            sortList(test);
                         }
                     }
                 })
@@ -165,82 +141,65 @@ function displayCardRecipes(filterArray) {
                     test.push(els);
                     a.push(els.name);
                     generateCardRecipe(test)
+                    sortList(test);
                 }
                 if (els.ustensils.includes(x)) {
                     test.push(els);
                     a.push(els.name);
                     generateCardRecipe(test)
+                    sortList(test);
                 }
             }
+            
         })
 
     })
+    filterArray.forEach(el=>{
+        let removeTagList = document.getElementById(el)
+        removeTagList.remove()
+    })
+    selectSortOption()
 }
 
 function algoMain() {
-    const inputMain = document.querySelectorAll('.searchBar');
+    const inputMain = document.getElementById("search");
+    const inputTag = document.querySelectorAll('.searchBar');
+    let g = recipes
     let x = []
-    let a = []
-    let b = []
-    let c = []
-    inputMain.forEach(z => {
-        z.addEventListener("input", () => {
 
-            if (z.value.length > 2) {
-                x = []
-                a = []
-                b = []
-                c = []
-                recipes.forEach(el => {
-                    let test = JSON.stringify(el).toLowerCase()
-                    if (test.includes(z.value.toLowerCase()) == true) {
-                        x.push(el);
-                        generateCardRecipe(x);
-                    }
-                })
-                x.forEach(els => {
-                    els.ingredients.forEach(elss => {
-                        if (!a.includes(elss.ingredient)) {
-                            a.push(elss.ingredient)
-                        }
+    inputMain.addEventListener("input", () => {
+        if (inputMain.value.length > 2) {
+            x = []
+            recipes.forEach(el => {
+                let test = JSON.stringify(el).toLowerCase()
+                if (test.includes(inputMain.value.toLowerCase()) == true) {
+                    x.push(el);
+                    generateCardRecipe(x);
+                    sortList(x)
+                }
+            })
+        } else {
+            generateCardRecipe(recipes)
+            sortList(recipes)
+        }
+        selectSortOption();
+    })
 
-                    })
-                    if (!b.includes(els.appliance)) {
-                        b.push(els.appliance)
-                    }
-                    els.ustensils.forEach(elss => {
-                        if (!c.includes(elss)) {
-                            c.push(elss)
-                        }
-                    })
-                })
-                displaySortList(a, 'ingredients');
-                displaySortList(b, 'appliance');
-                displaySortList(c, 'ustensils');                   
-            } else {
-                generateCardRecipe(recipes)
-                sortList(a, 'ingredients', 'ingredient');
-                sortList(b, 'appliance', '');
-                sortList(c, 'ustensils', '');                 
-            }
-                selectSortOption(); 
+    inputTag.forEach(el => {
+        el.addEventListener("input", () => {
+            console.log(el.value)
         })
     })
 
 }
 
-function resetButton(){
-    let resetBtn = document.querySelectorAll("[type=reset]")    
-    let a = []
-    let b = []
-    let c = []
-    resetBtn.forEach(el =>{
-        el.addEventListener("click",()=>{
+function resetButton() {
+    let resetBtn = document.querySelectorAll("[type=reset]")
+    resetBtn.forEach(el => {
+        el.addEventListener("click", () => {
             generateCardRecipe(recipes);
-            sortList(a, 'ingredients', 'ingredient');
-            sortList(b, 'appliance', '');
-            sortList(c, 'ustensils', '');
-            selectSortOption();    
+            sortList(recipes)
+            selectSortOption();
         })
     })
 }
@@ -248,3 +207,44 @@ function resetButton(){
 
 recoveryRecipes()
 
+function sortList(array) {
+    let ingredients = [];
+    let appliance = [];
+    let ustensils = [];
+    if (array.length > 1) {
+        array.forEach(els => {
+            els.ingredients.forEach(elss => {
+                if (!ingredients.includes(elss.ingredient)) {
+                    ingredients.push(elss.ingredient)
+                }
+            })
+            if (!appliance.includes(els.appliance)) {
+                appliance.push(els.appliance)
+            }
+            els.ustensils.forEach(elss => {
+                if (!ustensils.includes(elss)) {
+                    ustensils.push(elss)
+                }
+            })
+        })
+    } else {        
+        array[0].ingredients.forEach(elss => {
+            if (!ingredients.includes(elss.ingredient)) {
+                ingredients.push(elss.ingredient)
+            }
+        })
+        if (!appliance.includes(array[0].appliance)) {
+            appliance.push(array[0].appliance)
+        }
+        array[0].ustensils.forEach(elss => {
+            if (!ustensils.includes(elss)) {
+                ustensils.push(elss)
+            }
+        })
+
+    }
+
+    displaySortList(ingredients, 'ingredients')
+    displaySortList(appliance, 'appliance')
+    displaySortList(ustensils, 'ustensils')
+}
