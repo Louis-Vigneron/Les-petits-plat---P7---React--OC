@@ -92,7 +92,7 @@ function generateCardRecipe(array) {
     const totalRecipes = document.getElementById("totalRecipes");
     totalRecipes.textContent = `${array.length} recettes`;
     cardPlace.innerHTML = ""
-    array.forEach(el => {
+     array.forEach(el => {
         cardPlace.innerHTML +=
             `   
            <div class="main__recipes__card">
@@ -117,7 +117,7 @@ function generateCardRecipe(array) {
                </div>
            </div>    
        `
-    });
+    }); 
 }
 
 function displayCardRecipes(filterArray) {
@@ -163,9 +163,9 @@ function displayCardRecipes(filterArray) {
 
 function algoMain() {
     const inputMain = document.getElementById("search");
-    const inputTag = document.querySelectorAll('.searchBar');
-    let g = recipes
+    const inputTag = document.querySelectorAll('.searchBar');    
     let x = []
+    let y = []
 
     inputMain.addEventListener("input", () => {
         if (inputMain.value.length > 2) {
@@ -185,9 +185,25 @@ function algoMain() {
         selectSortOption();
     })
 
-    inputTag.forEach(el => {
-        el.addEventListener("input", () => {
-            console.log(el.value)
+    inputTag.forEach(el => {  
+        let p = el.closest('div')
+        let l = p.querySelector('.main__sort__list__ul')        
+        let value = [];
+        l.querySelectorAll("li").forEach(el =>{
+            value.push(el.textContent)
+        })
+        el.addEventListener("input", () => {    
+            y = []
+            recipes.forEach(els => {
+                let test = JSON.stringify(els).toLowerCase()
+                if (test.includes(el.value.toLowerCase()) == true) {
+                    y.push(els);
+                    generateCardRecipe(y);
+                }
+            })
+            let o = value.filter(t => t.includes(el.value));
+            displaySortList(o, l.id);
+            selectSortOption();
         })
     })
 
@@ -203,9 +219,6 @@ function resetButton() {
         })
     })
 }
-
-
-recoveryRecipes()
 
 function sortList(array) {
     let ingredients = [];
@@ -248,3 +261,4 @@ function sortList(array) {
     displaySortList(appliance, 'appliance')
     displaySortList(ustensils, 'ustensils')
 }
+recoveryRecipes()
