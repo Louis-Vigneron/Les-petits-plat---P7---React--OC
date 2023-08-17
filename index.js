@@ -92,7 +92,7 @@ function generateCardRecipe(array) {
     const totalRecipes = document.getElementById("totalRecipes");
     totalRecipes.textContent = `${array.length} recettes`;
     cardPlace.innerHTML = ""
-     array.forEach(el => {
+       array.forEach(el => {
         cardPlace.innerHTML +=
             `   
            <div class="main__recipes__card">
@@ -117,47 +117,25 @@ function generateCardRecipe(array) {
                </div>
            </div>    
        `
-    }); 
+    });   
 }
 
 function displayCardRecipes(filterArray) {
-    let test = [];
-    let a = [];
-   
-    recipes.forEach(els => {
-        filterArray.forEach(x => {
-            if (a.includes(els.name) == false) {
-                els.ingredients.forEach(el => {
-                    if (a.includes(els.name) == false) {
-                        if (el.ingredient.includes(x)) {
-                            test.push(els);
-                            a.push(els.name);
-                            generateCardRecipe(test)
-                            sortList(test);
-                        }
-                    }
-                })
-                if (els.appliance == x) {
-                    test.push(els);
-                    a.push(els.name);
-                    generateCardRecipe(test)
-                    sortList(test);
-                }
-                if (els.ustensils.includes(x)) {
-                    test.push(els);
-                    a.push(els.name);
-                    generateCardRecipe(test)
-                    sortList(test);
-                }
-            }
-            
+    let tests = [];
+    recipes.forEach(el => {       
+        let test = JSON.stringify(el)
+        let k = filterArray.every(item => test.includes(item))
+        if(k == true){                      
+            tests.push(el)           
+        }
         })
+            generateCardRecipe(tests)
+            sortList(tests);    
 
-    })
-    filterArray.forEach(el=>{
+     filterArray.forEach(el=>{
         let removeTagList = document.getElementById(el)
         removeTagList.remove()
-    })
+    }) 
     selectSortOption()
 }
 
@@ -198,10 +176,10 @@ function algoMain() {
                 let test = JSON.stringify(els).toLowerCase()
                 if (test.includes(el.value.toLowerCase()) == true) {
                     y.push(els);
-                    generateCardRecipe(y);
+                    generateCardRecipe(y);                    
                 }
             })
-            let o = value.filter(t => t.includes(el.value));
+            let o = value.filter(t => t.toLowerCase().includes(el.value.toLowerCase()));
             displaySortList(o, l.id);
             selectSortOption();
         })
@@ -214,7 +192,7 @@ function resetButton() {
     resetBtn.forEach(el => {
         el.addEventListener("click", () => {
             generateCardRecipe(recipes);
-            sortList(recipes)
+            sortList(recipes);
             selectSortOption();
         })
     })
@@ -261,4 +239,5 @@ function sortList(array) {
     displaySortList(appliance, 'appliance')
     displaySortList(ustensils, 'ustensils')
 }
+
 recoveryRecipes()
