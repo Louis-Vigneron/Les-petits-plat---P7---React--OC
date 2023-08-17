@@ -40,7 +40,6 @@ function selectSortOption() {
             options.forEach(els => {
                 els.setAttribute('aria-selected', "false");
             })
-            listOptions.setAttribute('aria-expanded', "true");
             el.setAttribute('aria-selected', "true");
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
             let displayOptionList = listOptions.previousElementSibling;
@@ -49,7 +48,7 @@ function selectSortOption() {
                 displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
                 alreadySelect.push(selectedOption);
                 cleanOptionSelect();
-                displayCardRecipes(alreadySelect);                
+                displayCardRecipes(alreadySelect);
             }
         })
     });
@@ -71,7 +70,7 @@ function cleanOptionSelect() {
                 sortList(recipes);
 
             } else {
-                displayCardRecipes(alreadySelect);                
+                displayCardRecipes(alreadySelect);
             }
             selectSortOption()
         })
@@ -92,7 +91,7 @@ function generateCardRecipe(array) {
     const totalRecipes = document.getElementById("totalRecipes");
     totalRecipes.textContent = `${array.length} recettes`;
     cardPlace.innerHTML = ""
-       array.forEach(el => {
+    array.forEach(el => {
         cardPlace.innerHTML +=
             `   
            <div class="main__recipes__card">
@@ -117,34 +116,40 @@ function generateCardRecipe(array) {
                </div>
            </div>    
        `
-    });   
+    });
 }
 
 function displayCardRecipes(filterArray) {
     let tests = [];
-    recipes.forEach(el => {       
+    recipes.forEach(el => {
         let test = JSON.stringify(el)
         let k = filterArray.every(item => test.includes(item))
-        if(k == true){                      
-            tests.push(el)           
+        if (k == true) {
+            tests.push(el)
         }
-        })
-            generateCardRecipe(tests)
-            sortList(tests);    
-
-     filterArray.forEach(el=>{
+    })
+    generateCardRecipe(tests)
+    sortList(tests);
+    filterArray.forEach(el => {
         let removeTagList = document.getElementById(el)
         removeTagList.remove()
-    }) 
+    })
+
     selectSortOption()
+}
+
+function removeTag(filterArray) {
+    filterArray.forEach(el => {
+        let removeTagList = document.getElementById(el)
+        removeTagList.remove()
+    })
 }
 
 function algoMain() {
     const inputMain = document.getElementById("search");
-    const inputTag = document.querySelectorAll('.searchBar');    
+    const inputTag = document.querySelectorAll('.searchBar');
     let x = []
     let y = []
-
     inputMain.addEventListener("input", () => {
         if (inputMain.value.length > 2) {
             x = []
@@ -152,34 +157,34 @@ function algoMain() {
                 let test = JSON.stringify(el).toLowerCase()
                 if (test.includes(inputMain.value.toLowerCase()) == true) {
                     x.push(el);
-                    generateCardRecipe(x);
-                    sortList(x)
                 }
             })
+            generateCardRecipe(x);
+            sortList(x)
         } else {
-            generateCardRecipe(recipes)
-            sortList(recipes)
+            displayCardRecipes(alreadySelect)
         }
         selectSortOption();
     })
 
-    inputTag.forEach(el => {  
+    inputTag.forEach(el => {
         let p = el.closest('div')
-        let l = p.querySelector('.main__sort__list__ul')        
+        let l = p.querySelector('.main__sort__list__ul')
         let value = [];
-        l.querySelectorAll("li").forEach(el =>{
+        l.querySelectorAll("li").forEach(el => {
             value.push(el.textContent)
         })
-        el.addEventListener("input", () => {    
+        el.addEventListener("input", () => {
             y = []
             recipes.forEach(els => {
                 let test = JSON.stringify(els).toLowerCase()
                 if (test.includes(el.value.toLowerCase()) == true) {
                     y.push(els);
-                    generateCardRecipe(y);                    
                 }
             })
+            generateCardRecipe(y);
             let o = value.filter(t => t.toLowerCase().includes(el.value.toLowerCase()));
+            console.log(o)
             displaySortList(o, l.id);
             selectSortOption();
         })
@@ -191,9 +196,7 @@ function resetButton() {
     let resetBtn = document.querySelectorAll("[type=reset]")
     resetBtn.forEach(el => {
         el.addEventListener("click", () => {
-            generateCardRecipe(recipes);
-            sortList(recipes);
-            selectSortOption();
+            displayCardRecipes(alreadySelect)
         })
     })
 }
@@ -218,7 +221,7 @@ function sortList(array) {
                 }
             })
         })
-    } else {        
+    } else {
         array[0].ingredients.forEach(elss => {
             if (!ingredients.includes(elss.ingredient)) {
                 ingredients.push(elss.ingredient)
