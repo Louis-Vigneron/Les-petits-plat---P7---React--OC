@@ -105,7 +105,7 @@ function generateCardRecipe(array) {
     array.forEach(el => {
         cardPlace.innerHTML +=
             `   
-           <div class="main__recipes__card">
+           <div class="main__recipes__card" id=${el.id}>
                <img class="main__recipes__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
                <div class="main__recipes__card__time">${el.time} min</div>
                <div class="main__recipes__card__description">
@@ -133,7 +133,7 @@ function generateCardRecipe(array) {
 //function for display recipe with selected tag(s)
 function displayCardRecipes(filterArray) {
     let recipesFiltered = [];
-    
+
     recipes.forEach(el => {
         let jsonRecipe = JSON.stringify(el);
         let checkEl = filterArray.every(item => jsonRecipe.includes(item));
@@ -145,16 +145,59 @@ function displayCardRecipes(filterArray) {
     sortList(recipesFiltered);
     filterArray.forEach(el => {
         let removeTagList = document.getElementById(el);
-        if(removeTagList != null){
+        if (removeTagList != null) {
             removeTagList.remove();
-        }        
+        }
     })
     selectSortOption();
 }
 
 //function to search for items when typing in the search bar
+let displayRecipe = [];
+let idRecipe = [];
 function algo() {
-    
+    const inputMain = document.getElementById("search");
+    const inputTag = document.querySelectorAll('.searchBar');
+    const noRecipe = document.getElementById('noRecipes');
+    let test = []    
+
+    inputMain.addEventListener("input", () => {
+        if (!checkInput(inputMain)) {
+            if (inputMain.value.length > 2) {
+                let cardRecipeId = document.querySelectorAll(".main__recipes__card");   
+                 
+                
+                for (let y = 0; recipes.length > y; y++) {                  
+                    let jsonRecipe = JSON.stringify(recipes[y]).toLowerCase();
+                    if (jsonRecipe.includes(inputMain.value.toLowerCase())) {
+                        if (!idRecipe.includes(recipes[y].id)) {
+                            displayRecipe.push(recipes[y])
+                            idRecipe.push(recipes[y].id)
+                        }
+                    } else {
+                        if (idRecipe.includes(recipes[y].id)) {
+                            for (let z = 0; idRecipe.length > z; z++) {
+                                if (idRecipe[z] == recipes[y].id) {
+                                    idRecipe.splice(z, 1);
+                                    displayRecipe.splice(z, 1);
+                                }
+                            }
+
+                        }
+                    }
+                }
+                generateCardRecipe(displayRecipe);
+                sortList(displayRecipe);
+                selectSortOption();
+            }
+        }
+    })
+
+    for (let x = 0; inputTag.length > x; x++) {
+        inputTag[x].addEventListener("input", () => {
+            console.log(x)
+        })
+    }
 }
 
 //function for reset input with the cross button
@@ -224,11 +267,11 @@ function checkInput(nodeDuChamp) {
 }
 
 //function for add tag from input bar 
-function tagFromSearchBar(){
+function tagFromSearchBar() {
     const displayOption = document.getElementById('selectedOption');
     const searchButton = document.querySelectorAll('.searchButton');
-    searchButton.forEach(el =>{
-        el.addEventListener("click",(e)=>{           
+    searchButton.forEach(el => {
+        el.addEventListener("click", (e) => {
             const form = el.closest('form');
             const inputBar = form.querySelector("input");
             e.preventDefault();
