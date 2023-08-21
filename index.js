@@ -8,6 +8,7 @@ function recoveryRecipes() {
     resetButton();
     displaySortOptions();
     selectSortOption();
+    tagFromSearchBar()
 }
 
 //function for display tags lists
@@ -132,6 +133,7 @@ function generateCardRecipe(array) {
 //function for display recipe with selected tag(s)
 function displayCardRecipes(filterArray) {
     let recipesFiltered = [];
+    
     recipes.forEach(el => {
         let jsonRecipe = JSON.stringify(el);
         let checkEl = filterArray.every(item => jsonRecipe.includes(item));
@@ -143,7 +145,9 @@ function displayCardRecipes(filterArray) {
     sortList(recipesFiltered);
     filterArray.forEach(el => {
         let removeTagList = document.getElementById(el);
-        removeTagList.remove();
+        if(removeTagList != null){
+            removeTagList.remove();
+        }        
     })
     selectSortOption();
 }
@@ -196,6 +200,8 @@ function algo() {
 
             } else {
                 displayCardRecipes(alreadySelect);
+                noRecipe.innerHTML = '';
+                noRecipe.style.padding = '0';
             }
             selectSortOption();
         }
@@ -318,5 +324,22 @@ function checkInput(nodeDuChamp) {
     }
 }
 
+//function for add tag from input bar 
+function tagFromSearchBar(){
+    const displayOption = document.getElementById('selectedOption');
+    const searchButton = document.querySelectorAll('.searchButton');
+    searchButton.forEach(el =>{
+        el.addEventListener("click",(e)=>{           
+            const form = el.closest('form');
+            const inputBar = form.querySelector("input");
+            e.preventDefault();
+            displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${inputBar.value}">${inputBar.value} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
+            alreadySelect.push(inputBar.value);
+            displayCardRecipes(alreadySelect);
+            cleanOptionSelect();
+            inputBar.value = '';
+        })
+    })
+}
 
 recoveryRecipes()
