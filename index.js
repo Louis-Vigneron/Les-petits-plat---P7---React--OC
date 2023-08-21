@@ -1,50 +1,17 @@
 import recipes from './Data/recipes.js';
 
+//function for generate main page
 function recoveryRecipes() {
-
-    const main = document.getElementById("main");
-    const totalRecipes = document.getElementById("totalRecipes")
-
-    let ingredients = [];
-    let appliance = [];
-    let ustensils = [];
-
-    totalRecipes.textContent = `${recipes.length} recettes`
-
-    recipes.forEach(el => {
-        main.innerHTML +=
-            `   
-         <div class="main__card">
-             <img class="main__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
-             <div class="main__card__time">${el.time} min</div>
-             <div class="main__card__description">
-                 <h2 class="main__card__description__title">${el.name}</h2>
-                 <div class="main__card__description__recipe">
-                     <h3 class="main__card__description__recipe__title">RECETTE</h3>
-                     <p class="main__card__description__recipe__text">${el.description}</p>
-                 </div>
-                 <div class="main__card__description__ingredient">
-                     <h3 class="main__card__description__ingredient__title">INGRÉDIENTS</h3>     
-                     ${el.ingredients.map((ingredient) =>
-                `   <div class="main__card__description__ingredient__tags">
-                                 <p class="main__card__description__ingredient__tags__type">${ingredient.ingredient}</p>
-                                 <p class="main__card__description__ingredient__tags__quantity">${ingredient.quantity ? ingredient.quantity : '-'} ${ingredient.unit ? ingredient.unit : ''}</p>
-                             </div>
-                             `).join('')
-            }       
-                 </div>
-             </div>
-         </div>    
-     `
-    });
-
-    sortList(ingredients, 'ingredients', 'ingredient');
-    sortList(appliance, 'appliance', '');
-    sortList(ustensils, 'ustensils', '');
+    generateCardRecipe(recipes);
+    sortList(recipes);
+    algo();
+    resetButton();
     displaySortOptions();
     selectSortOption();
+    tagFromSearchBar()
 }
 
+//function for display tags lists
 function displaySortOptions() {
     const button = document.querySelectorAll('.main__sort__button');
     button.forEach(el => {
@@ -64,18 +31,21 @@ function displaySortOptions() {
 
 
 }
-let alreadySelect = []
+
+//function for select and display tag selected
+let alreadySelect = [];
 function selectSortOption() {
     const options = document.querySelectorAll('[role="listbox"]');
-    const displayOption = document.getElementById('selectedOption')
-
+    const displayOption = document.getElementById('selectedOption');
+    const cleanMainBar = document.getElementById('search');
     options.forEach(el => {
         el.addEventListener("click", () => {
             let listOptions = el.closest("ul");
+            let selectDiv = el.closest("div");
+            let selectInputClean = selectDiv.querySelector(".searchBar");
             options.forEach(els => {
                 els.setAttribute('aria-selected', "false");
             })
-            listOptions.setAttribute('aria-expanded', "true");
             el.setAttribute('aria-selected', "true");
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
             let displayOptionList = listOptions.previousElementSibling;
@@ -84,41 +54,16 @@ function selectSortOption() {
                 displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
                 alreadySelect.push(selectedOption);
                 cleanOptionSelect();
+                displayCardRecipes(alreadySelect);
+                selectInputClean.value = '';
+                cleanMainBar.value = '';
             }
-
-
         })
     });
 
 }
 
-function sortList(array, types, type) {
-    const sort = document.getElementById(types);
-    recipes.forEach(els => {
-        if (Array.isArray(els[types])) {
-            els[types].forEach(el => {
-                if (type == '') {
-                    if (!array.includes(el)) {
-                        array.push(el)
-                    }
-                } else {
-                    if (!array.includes(el[type])) {
-                        array.push(el[type])
-                    }
-                }
-            })
-        } else {
-            if (!array.includes(els[types])) {
-                array.push(els[types])
-            }
-        }
-
-    })
-    array.forEach(el => {
-        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
-    })
-}
-
+//function for remove selected tag
 function cleanOptionSelect() {
     let button = document.querySelectorAll(".closeOptionSelect");
     button.forEach(el => {
@@ -129,7 +74,171 @@ function cleanOptionSelect() {
             removeOption.forEach(el => {
                 el.remove()
             })
+            if (alreadySelect.length == 0) {
+                generateCardRecipe(recipes);
+                sortList(recipes);
+
+            } else {
+                displayCardRecipes(alreadySelect);
+            }
+            selectSortOption();
+        })
+
+    })
+}
+
+//function for generate li on ul tag list
+function displaySortList(array, id) {
+    const sort = document.getElementById(id);
+    sort.innerHTML = '';
+    array.forEach(el => {
+        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
+    })
+}
+
+//function for generate and display card recipe
+function generateCardRecipe(array) {
+    const cardPlace = document.getElementById("recipesCard");
+    const totalRecipes = document.getElementById("totalRecipes");
+    totalRecipes.textContent = `${array.length} recettes`;
+    cardPlace.innerHTML = "";
+    array.forEach(el => {
+        cardPlace.innerHTML +=
+            `   
+           <div class="main__recipes__card">
+               <img class="main__recipes__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
+               <div class="main__recipes__card__time">${el.time} min</div>
+               <div class="main__recipes__card__description">
+                   <h2 class="main__recipes__card__description__title">${el.name}</h2>
+                   <div class="main__recipes__card__description__recipe">
+                       <h3 class="main__recipes__card__description__recipe__title">RECETTE</h3>
+                       <p class="main__recipes__card__description__recipe__text">${el.description}</p>
+                   </div>
+                   <div class="main__recipes__card__description__ingredient">
+                       <h3 class="main__recipes__card__description__ingredient__title">INGRÉDIENTS</h3>     
+                       ${el.ingredients.map((ingredient) =>
+                `   <div class="main__recipes__card__description__ingredient__tags">
+                                   <p class="main__recipes__card__description__ingredient__tags__type">${ingredient.ingredient}</p>
+                                   <p class="main__recipes__card__description__ingredient__tags__quantity">${ingredient.quantity ? ingredient.quantity : '-'} ${ingredient.unit ? ingredient.unit : ''}</p>
+                               </div>
+                               `).join('')
+            }       
+                   </div>
+               </div>
+           </div>    
+       `
+    });
+}
+
+//function for display recipe with selected tag(s)
+function displayCardRecipes(filterArray) {
+    let recipesFiltered = [];
+    
+    recipes.forEach(el => {
+        let jsonRecipe = JSON.stringify(el);
+        let checkEl = filterArray.every(item => jsonRecipe.includes(item));
+        if (checkEl == true) {
+            recipesFiltered.push(el)
+        }
+    })
+    generateCardRecipe(recipesFiltered)
+    sortList(recipesFiltered);
+    filterArray.forEach(el => {
+        let removeTagList = document.getElementById(el);
+        if(removeTagList != null){
+            removeTagList.remove();
+        }        
+    })
+    selectSortOption();
+}
+
+//function to search for items when typing in the search bar
+function algo() {
+    
+}
+
+//function for reset input with the cross button
+function resetButton() {
+    let resetBtn = document.querySelectorAll("[type=reset]");
+    const noRecipe = document.getElementById('noRecipes');
+    resetBtn.forEach(el => {
+        el.addEventListener("click", () => {
+            noRecipe.style.padding = '0';
+            noRecipe.innerHTML = "";
+            displayCardRecipes(alreadySelect);
         })
     })
 }
+
+//function for generate array for tag list 
+function sortList(array) {
+    let ingredients = [];
+    let appliance = [];
+    let ustensils = [];
+    if (array.length > 1) {
+        array.forEach(els => {
+            els.ingredients.forEach(elss => {
+                if (!ingredients.includes(elss.ingredient)) {
+                    ingredients.push(elss.ingredient)
+                }
+            })
+            if (!appliance.includes(els.appliance)) {
+                appliance.push(els.appliance)
+            }
+            els.ustensils.forEach(elss => {
+                if (!ustensils.includes(elss)) {
+                    ustensils.push(elss)
+                }
+            })
+        })
+    } else if (array.length == 1) {
+        array[0].ingredients.forEach(elss => {
+            if (!ingredients.includes(elss.ingredient)) {
+                ingredients.push(elss.ingredient)
+            }
+        })
+        if (!appliance.includes(array[0].appliance)) {
+            appliance.push(array[0].appliance)
+        }
+        array[0].ustensils.forEach(elss => {
+            if (!ustensils.includes(elss)) {
+                ustensils.push(elss)
+            }
+        })
+    }
+
+    displaySortList(ingredients, 'ingredients');
+    displaySortList(appliance, 'appliance');
+    displaySortList(ustensils, 'ustensils');
+}
+
+//function regex to control input user
+function checkInput(nodeDuChamp) {
+    let regexTest = /^[A-Za-z]{0,20}$/
+    if (!nodeDuChamp.value || !regexTest.test(nodeDuChamp.value)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+//function for add tag from input bar 
+function tagFromSearchBar(){
+    const displayOption = document.getElementById('selectedOption');
+    const searchButton = document.querySelectorAll('.searchButton');
+    searchButton.forEach(el =>{
+        el.addEventListener("click",(e)=>{           
+            const form = el.closest('form');
+            const inputBar = form.querySelector("input");
+            e.preventDefault();
+            displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${inputBar.value}">${inputBar.value} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
+            alreadySelect.push(inputBar.value);
+            displayCardRecipes(alreadySelect);
+            cleanOptionSelect();
+            inputBar.value = '';
+        })
+    })
+}
+
 recoveryRecipes()

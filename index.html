@@ -27,8 +27,9 @@
             <button class="header__search__reset" type="reset">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <button class="header__search__button">
-                <i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="header__search__button searchButton">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </form>
     </header>
 
@@ -40,11 +41,11 @@
                 <div class="main__sort__list">
                     <form class="main__sort__list__search">
                         <label for="search"></label>
-                        <input class="main__sort__list__search__input" type="text">
+                        <input class="main__sort__list__search__input searchBar" type="text" id="searchIngredients">
                         <button class="main__sort__list__search__reset" type="reset">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
-                        <button class="main__sort__list__search__button">
+                        <button class="main__sort__list__search__button searchButton">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
@@ -61,11 +62,11 @@
                 <div class="main__sort__list">
                     <form class="main__sort__list__search">
                         <label for="search"></label>
-                        <input class="main__sort__list__search__input" type="text">
+                        <input class="main__sort__list__search__input searchBar" id="searchAppliance" type="text">
                         <button class="main__sort__list__search__reset" type="reset">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
-                        <button class="main__sort__list__search__button">
+                        <button class="main__sort__list__search__button searchButton">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
@@ -82,11 +83,11 @@
                 <div class="main__sort__list">
                     <form class="main__sort__list__search">
                         <label for="search"></label>
-                        <input class="main__sort__list__search__input" type="text">
+                        <input class="main__sort__list__search__input searchBar" type="text" id="searchUstensils">
                         <button class="main__sort__list__search__reset" type="reset">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
-                        <button class="main__sort__list__search__button">
+                        <button class="main__sort__list__search__button searchButton">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
@@ -97,15 +98,18 @@
 
             </div>
 
-            <p id="totalRecipes" class="main__recipes"></p>
+            <p id="totalRecipes" class="main__totalRecipes"></p>
         </div>
         <div class="main__selected" id="selectedOption"></div>
+        <div class="main__noRecipes" id="noRecipes"></div>
+        <div class="main__recipes" id="recipesCard"></div>
     </main>
 
     <!-- Font awasome icônes -->
     <script src="https://kit.fontawesome.com/66a5799a6b.js" crossorigin="anonymous"></script>
     <script type="module" src="./Data/recipes.js"></script>
     <script type="module" src="./index.js"></script>
+    <!--  <script src="./algo.js"></script> -->
 </body>
 
 </html>

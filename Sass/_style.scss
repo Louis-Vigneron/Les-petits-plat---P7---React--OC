@@ -83,89 +83,97 @@
     background-color: $mainBackground ;
     padding: 0 75px;
 
-    &__card {
-        background-color: $white;
-        width: 26%;
-        height: 731px;
-        border-radius: 21px;
-        margin: 50px 0;
-        position: relative;
+    &__recipes {
+        display: flex;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
 
-        &__img {
-            object-fit: cover;
-            width: 100%;
-            height: 253px;
-            border-radius: 21px 21px 0 0;
-        }
+        &__card {
+            background-color: $white;
+            width: 26%;
+            height: 731px;
+            border-radius: 21px;
+            margin: 50px 0;
+            position: relative;
 
-        &__description {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            padding: 0 50px;
-
-            &__title {
-                font-weight: 400;
-                font-family: $Anton, $DefaultFont;
-                margin: 0;
-                margin-top: 25px;
+            &__img {
+                object-fit: cover;
+                width: 100%;
+                height: 253px;
+                border-radius: 21px 21px 0 0;
             }
 
-            &__recipe {
-                &__text {
-                    height: 92px;
-                    overflow: hidden;
-                }
-
-                &__title {
-                    color: $grey;
-                    font-family: $Manrope, $DefaultFont ;
-                }
-            }
-
-            &__ingredient {
+            &__description {
                 display: flex;
                 justify-content: space-between;
-                flex-wrap: wrap;
+                flex-direction: column;
+                padding: 0 50px;
 
                 &__title {
-                    width: 100%;
-                    color: $grey;
-                    font-family: $Manrope, $DefaultFont ;
+                    font-weight: 400;
+                    font-family: $Anton, $DefaultFont;
+                    margin: 0;
+                    margin-top: 25px;
                 }
 
-                &__tags {
-                    margin-bottom: 15px;
-                    width: 35%;
-
-                    &__type {
-                        margin: 0;
+                &__recipe {
+                    &__text {
+                        height: 92px;
+                        overflow: hidden;
                     }
 
-                    &__quantity {
-                        margin: 0;
+                    &__title {
                         color: $grey;
                         font-family: $Manrope, $DefaultFont ;
-                        font-size: 14px;
-                        padding-top: 5px;
+                    }
+                }
+
+                &__ingredient {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+
+                    &__title {
+                        width: 100%;
+                        color: $grey;
+                        font-family: $Manrope, $DefaultFont ;
+                    }
+
+                    &__tags {
+                        margin-bottom: 15px;
+                        width: 35%;
+
+                        &__type {
+                            margin: 0;
+                        }
+
+                        &__quantity {
+                            margin: 0;
+                            color: $grey;
+                            font-family: $Manrope, $DefaultFont ;
+                            font-size: 14px;
+                            padding-top: 5px;
+                        }
                     }
                 }
             }
-        }
 
-        &__time {
-            position: absolute;
-            background-color: $yellow;
-            padding: 5px 15px 5px 15px;
-            border-radius: 14px;
-            font-weight: 400;
-            font-family: $Manrope;
-            text-align: center;
-            width: 63px;
-            height: 23px;
-            top: 25px;
-            right: 25px;
-            ;
+            &__time {
+                position: absolute;
+                background-color: $yellow;
+                padding: 5px 15px 5px 15px;
+                border-radius: 14px;
+                font-weight: 400;
+                font-family: $Manrope;
+                text-align: center;
+                width: 63px;
+                height: 23px;
+                top: 25px;
+                right: 25px;
+                ;
+            }
         }
     }
 
@@ -293,7 +301,7 @@
         }
     }
 
-    &__recipes {
+    &__totalRecipes {
         flex-grow: 1;
         text-align: end;
         font-size: 21px;
@@ -321,6 +329,14 @@
                 font-size: 20px;
             }
         }
+    }
+
+    &__noRecipes {
+        width: 100%;
+        font-size: 30px;
+        text-align: center;
+        padding: 0;
+        font-family: $Manrope;
     }
 }
 
