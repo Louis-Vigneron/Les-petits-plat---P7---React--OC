@@ -187,16 +187,26 @@ function algo() {
     })
 
     let tags = []
+    let filteredTags = []
     for (let x = 0; inputTag.length > x; x++) {
         inputTag[x].addEventListener("input", () => {
-            tags = []
+            tags = [];
+            filteredTags = [];
             let selectDiv = inputTag[x].closest("div")
+            let selectUl = selectDiv.querySelector('ul')
             let selectList = selectDiv.querySelectorAll('li')
             for(let n = 0; selectList.length > n; n++){
-                tags.push(selectList[n].id)                
+                tags.push(selectList[n].textContent)                
             }
-           
-            //console.log(tags)
+            for(let o = 0; tags.length > o; o++){
+                if(tags[o].toLowerCase().includes(inputTag[x].value.toLowerCase())){
+                    if(!filteredTags.includes(tags[o])){
+                        filteredTags.push(tags[o])
+                    }                    
+                }
+            }      
+            displaySortList(filteredTags, selectUl.id); 
+            console.log(filteredTags)
         })
     }
 }
