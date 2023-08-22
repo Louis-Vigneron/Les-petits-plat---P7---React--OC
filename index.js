@@ -50,9 +50,9 @@ function selectSortOption() {
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
             let displayOptionList = listOptions.previousElementSibling;
             if (!alreadySelect.includes(selectedOption)) {
-                displayOptionList.innerHTML += `<p class="main__sort__list__select__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-circle-xmark closeOptionSelect closeOptionSelect--list"></i></i></p>`;
-                displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${selectedOption} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
-                alreadySelect.push(selectedOption);
+                displayOptionList.innerHTML += `<p class="main__sort__list__select__option" data-custom-value="${selectedOption.toLowerCase()}">${selectedOption.toLowerCase()} <i class="fa-solid fa-circle-xmark closeOptionSelect closeOptionSelect--list"></i></i></p>`;
+                displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption.toLowerCase()}">${selectedOption.toLowerCase()} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
+                alreadySelect.push(selectedOption.toLowerCase());
                 cleanOptionSelect();
                 displayCardRecipes(alreadySelect);
                 selectInputClean.value = '';
@@ -105,7 +105,7 @@ function generateCardRecipe(array) {
     array.forEach(el => {
         cardPlace.innerHTML +=
             `   
-           <div class="main__recipes__card" id=${el.id}>
+           <div class="main__recipes__card">
                <img class="main__recipes__card__img" src="./Assets/Photos Recettes/${el.image}" alt="${el.name}">
                <div class="main__recipes__card__time">${el.time} min</div>
                <div class="main__recipes__card__description">
@@ -135,7 +135,7 @@ function displayCardRecipes(filterArray) {
     let recipesFiltered = [];
 
     recipes.forEach(el => {
-        let jsonRecipe = JSON.stringify(el);
+        let jsonRecipe = JSON.stringify(el).toLowerCase();
         let checkEl = filterArray.every(item => jsonRecipe.includes(item));
         if (checkEl == true) {
             recipesFiltered.push(el)
@@ -153,42 +153,35 @@ function displayCardRecipes(filterArray) {
 }
 
 //function to search for items when typing in the search bar
-let displayRecipe = [];
-let idRecipe = [];
 function algo() {
+    let displayRecipe = [];
     const inputMain = document.getElementById("search");
     const inputTag = document.querySelectorAll('.searchBar');
-    const noRecipe = document.getElementById('noRecipes');
-    let test = []    
+    const noRecipe = document.getElementById('noRecipes');    
 
     inputMain.addEventListener("input", () => {
+    
         if (!checkInput(inputMain)) {
             if (inputMain.value.length > 2) {
-                let cardRecipeId = document.querySelectorAll(".main__recipes__card");   
-                 
-                
-                for (let y = 0; recipes.length > y; y++) {                  
-                    let jsonRecipe = JSON.stringify(recipes[y]).toLowerCase();
-                    if (jsonRecipe.includes(inputMain.value.toLowerCase())) {
-                        if (!idRecipe.includes(recipes[y].id)) {
-                            displayRecipe.push(recipes[y])
-                            idRecipe.push(recipes[y].id)
-                        }
-                    } else {
-                        if (idRecipe.includes(recipes[y].id)) {
-                            for (let z = 0; idRecipe.length > z; z++) {
-                                if (idRecipe[z] == recipes[y].id) {
-                                    idRecipe.splice(z, 1);
-                                    displayRecipe.splice(z, 1);
-                                }
-                            }
-
-                        }
-                    }
+                displayRecipe = [];
+                for(let y=0; alreadySelect.length>y; y++){
+                    displayRecipe.push(alreadySelect[y])
                 }
-                generateCardRecipe(displayRecipe);
-                sortList(displayRecipe);
-                selectSortOption();
+                displayRecipe.push(inputMain.value.toLowerCase());
+                console.log(displayRecipe)
+                displayCardRecipes(displayRecipe);
+                let cardRecipe = document.querySelectorAll('.main__recipes__card');
+                if(cardRecipe.length == 0) {
+                    noRecipe.style.padding = '50px';
+                    noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
+                    tarte aux pommes », « poisson », etc.`;
+                } else {
+                    noRecipe.innerHTML = '';
+                    noRecipe.style.padding = '0';
+                }
+
+            } else {
+                displayCardRecipes(alreadySelect);              
             }
         }
     })
