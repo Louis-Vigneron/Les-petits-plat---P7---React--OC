@@ -48,11 +48,12 @@ function selectSortOption() {
             })
             el.setAttribute('aria-selected', "true");
             let selectedOption = listOptions.querySelector('[aria-selected="true"]').id;
+            let text = listOptions.querySelector('[aria-selected="true"]').textContent;
             let displayOptionList = listOptions.previousElementSibling;
             if (!alreadySelect.includes(selectedOption)) {
-                displayOptionList.innerHTML += `<p class="main__sort__list__select__option" data-custom-value="${selectedOption.toLowerCase()}">${selectedOption.toLowerCase()} <i class="fa-solid fa-circle-xmark closeOptionSelect closeOptionSelect--list"></i></i></p>`;
-                displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption.toLowerCase()}">${selectedOption.toLowerCase()} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
-                alreadySelect.push(selectedOption.toLowerCase());
+                displayOptionList.innerHTML += `<p class="main__sort__list__select__option" data-custom-value="${selectedOption}">${text} <i class="fa-solid fa-circle-xmark closeOptionSelect closeOptionSelect--list"></i></i></p>`;
+                displayOption.innerHTML += `<p class="main__selected__option" data-custom-value="${selectedOption}">${text} <i class="fa-solid fa-xmark closeOptionSelect"></i></p>`;
+                alreadySelect.push(selectedOption);
                 cleanOptionSelect();
                 displayCardRecipes(alreadySelect);
                 selectInputClean.value = '';
@@ -92,7 +93,7 @@ function displaySortList(array, id) {
     const sort = document.getElementById(id);
     sort.innerHTML = '';
     array.forEach(el => {
-        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el}" role="listbox" aria-selected="false">${el}</li> `
+        sort.innerHTML += `<li class="main__sort__list__ul__select" id="${el.toLowerCase()}" role="listbox" aria-selected="false">${el}</li> `
     })
 }
 
@@ -168,7 +169,6 @@ function algo() {
                     displayRecipe.push(alreadySelect[y])
                 }
                 displayRecipe.push(inputMain.value.toLowerCase());
-                console.log(displayRecipe)
                 displayCardRecipes(displayRecipe);
                 let cardRecipe = document.querySelectorAll('.main__recipes__card');
                 if(cardRecipe.length == 0) {
@@ -186,9 +186,17 @@ function algo() {
         }
     })
 
+    let tags = []
     for (let x = 0; inputTag.length > x; x++) {
         inputTag[x].addEventListener("input", () => {
-            console.log(x)
+            tags = []
+            let selectDiv = inputTag[x].closest("div")
+            let selectList = selectDiv.querySelectorAll('li')
+            for(let n = 0; selectList.length > n; n++){
+                tags.push(selectList[n].id)                
+            }
+           
+            //console.log(tags)
         })
     }
 }
