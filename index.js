@@ -236,8 +236,8 @@ function algo() {
                 });
                 recipeToDisplayTags = [];
                 reciperFilteredTags.forEach(els => {
-                    let test = JSON.stringify(els).toLowerCase();
-                    if (test.includes(el.value.toLowerCase()) == true) {
+                    let  reciperFilteredTagsJson = JSON.stringify(els).toLowerCase();
+                    if ( reciperFilteredTagsJson.includes(el.value.toLowerCase()) == true) {
                         recipeToDisplayTags.push(els);
                     }
                 })
