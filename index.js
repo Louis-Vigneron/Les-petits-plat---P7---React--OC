@@ -134,10 +134,9 @@ function generateCardRecipe(array) {
 //function for display recipe with selected tag(s)
 function displayCardRecipes(filterArray) {
     let recipesFiltered = [];
-
     recipes.forEach(el => {
         let jsonRecipe = JSON.stringify(el).toLowerCase();
-        let checkEl = filterArray.every(item => jsonRecipe.includes(item));
+        let checkEl = filterArray.every(item => jsonRecipe.includes(item.toLowerCase()));
         if (checkEl == true) {
             recipesFiltered.push(el)
         }
@@ -158,20 +157,20 @@ function algo() {
     let displayRecipe = [];
     const inputMain = document.getElementById("search");
     const inputTag = document.querySelectorAll('.searchBar');
-    const noRecipe = document.getElementById('noRecipes');    
+    const noRecipe = document.getElementById('noRecipes');
 
+    //mange main search bar
     inputMain.addEventListener("input", () => {
-    
         if (!checkInput(inputMain)) {
             if (inputMain.value.length > 2) {
                 displayRecipe = [];
-                for(let y=0; alreadySelect.length>y; y++){
+                for (let y = 0; alreadySelect.length > y; y++) {
                     displayRecipe.push(alreadySelect[y])
                 }
                 displayRecipe.push(inputMain.value.toLowerCase());
                 displayCardRecipes(displayRecipe);
                 let cardRecipe = document.querySelectorAll('.main__recipes__card');
-                if(cardRecipe.length == 0) {
+                if (cardRecipe.length == 0) {
                     noRecipe.style.padding = '50px';
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
                     tarte aux pommes », « poisson », etc.`;
@@ -181,31 +180,51 @@ function algo() {
                 }
 
             } else {
-                displayCardRecipes(alreadySelect);              
+                noRecipe.innerHTML = '';
+                noRecipe.style.padding = '0';
+                displayCardRecipes(alreadySelect);
             }
         }
     })
 
-    let tags = []
-    let filteredTags = []
+    //manage tags search bar 
+    let tags = [];
+    let filteredTags = [];
     for (let x = 0; inputTag.length > x; x++) {
         inputTag[x].addEventListener("input", () => {
+            displayCardRecipes(alreadySelect);
             tags = [];
+            displayRecipe = [];
             filteredTags = [];
-            let selectDiv = inputTag[x].closest("div")
-            let selectUl = selectDiv.querySelector('ul')
-            let selectList = selectDiv.querySelectorAll('li')
-            for(let n = 0; selectList.length > n; n++){
-                tags.push(selectList[n].textContent)                
+            let selectDiv = inputTag[x].closest("div");
+            let selectUl = selectDiv.querySelector('ul');
+            let selectList = selectDiv.querySelectorAll('li');
+            for (let n = 0; selectList.length > n; n++) {
+                tags.push(selectList[n].textContent);
             }
-            for(let o = 0; tags.length > o; o++){
-                if(tags[o].toLowerCase().includes(inputTag[x].value.toLowerCase())){
-                    if(!filteredTags.includes(tags[o])){
-                        filteredTags.push(tags[o])
-                    }                    
+            for (let y = 0; alreadySelect.length > y; y++) {
+                displayRecipe.push(alreadySelect[y]);
+            }
+            for (let o = 0; tags.length > o; o++) {
+                if (tags[o].toLowerCase().includes(inputTag[x].value.toLowerCase())) {
+                    if (!filteredTags.includes(tags[o])) {
+                        filteredTags.push(tags[o]);
+                        displayRecipe.push(inputTag[x].value.toLowerCase());
+                    }
                 }
-            }      
-            displaySortList(filteredTags, selectUl.id); 
+            }
+            if(filteredTags.length == 0){
+                noRecipe.style.padding = '50px';
+                noRecipe.innerHTML = `Aucune filtre ne correspond à "${inputTag[x].value}"`;
+            } else {
+                noRecipe.innerHTML = '';
+                noRecipe.style.padding = '0';
+                displayCardRecipes(displayRecipe);
+                displaySortList(filteredTags, selectUl.id);
+                selectSortOption();
+            }
+
+            
             console.log(filteredTags)
         })
     }
