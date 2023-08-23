@@ -245,8 +245,8 @@ function algo() {
                     noRecipe.innerHTML = '';
                     noRecipe.style.padding = '0';
                     generateCardRecipe(recipeToDisplayTags);
-                    let o = listTags.filter(t => t.toLowerCase().includes(el.value.toLowerCase()));
-                    displaySortList(o, selectList.id);
+                    let listTagsFiltered = listTags.filter(t => t.toLowerCase().includes(el.value.toLowerCase()));
+                    displaySortList(listTagsFiltered, selectList.id);
                     selectSortOption();
                 } else {
                     sortList(recipeToDisplayTags);
