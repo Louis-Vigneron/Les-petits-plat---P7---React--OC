@@ -192,40 +192,39 @@ function algo() {
     let filteredTags = [];
     for (let x = 0; inputTag.length > x; x++) {
         inputTag[x].addEventListener("input", () => {
-            displayCardRecipes(alreadySelect);
-            tags = [];
-            displayRecipe = [];
-            filteredTags = [];
-            let selectDiv = inputTag[x].closest("div");
-            let selectUl = selectDiv.querySelector('ul');
-            let selectList = selectDiv.querySelectorAll('li');
-            for (let n = 0; selectList.length > n; n++) {
-                tags.push(selectList[n].textContent);
-            }
-            for (let y = 0; alreadySelect.length > y; y++) {
-                displayRecipe.push(alreadySelect[y]);
-            }
-            for (let o = 0; tags.length > o; o++) {
-                if (tags[o].toLowerCase().includes(inputTag[x].value.toLowerCase())) {
-                    if (!filteredTags.includes(tags[o])) {
-                        filteredTags.push(tags[o]);
-                        displayRecipe.push(inputTag[x].value.toLowerCase());
+            if (!checkInput(inputMain)) {
+                displayCardRecipes(alreadySelect);
+                tags = [];
+                displayRecipe = [];
+                filteredTags = [];
+                let selectDiv = inputTag[x].closest("div");
+                let selectUl = selectDiv.querySelector('ul');
+                let selectList = selectDiv.querySelectorAll('li');
+                for (let n = 0; selectList.length > n; n++) {
+                    tags.push(selectList[n].textContent);
+                }
+                for (let y = 0; alreadySelect.length > y; y++) {
+                    displayRecipe.push(alreadySelect[y]);
+                }
+                for (let o = 0; tags.length > o; o++) {
+                    if (tags[o].toLowerCase().includes(inputTag[x].value.toLowerCase())) {
+                        if (!filteredTags.includes(tags[o])) {
+                            filteredTags.push(tags[o]);
+                            displayRecipe.push(inputTag[x].value.toLowerCase());
+                        }
                     }
                 }
+                if (filteredTags.length == 0) {
+                    noRecipe.style.padding = '50px';
+                    noRecipe.innerHTML = `Aucune filtre ne correspond à "${inputTag[x].value}"`;
+                } else {
+                    noRecipe.innerHTML = '';
+                    noRecipe.style.padding = '0';
+                    displayCardRecipes(displayRecipe);
+                    displaySortList(filteredTags, selectUl.id);
+                    selectSortOption();
+                }
             }
-            if(filteredTags.length == 0){
-                noRecipe.style.padding = '50px';
-                noRecipe.innerHTML = `Aucune filtre ne correspond à "${inputTag[x].value}"`;
-            } else {
-                noRecipe.innerHTML = '';
-                noRecipe.style.padding = '0';
-                displayCardRecipes(displayRecipe);
-                displaySortList(filteredTags, selectUl.id);
-                selectSortOption();
-            }
-
-            
-            console.log(filteredTags)
         })
     }
 }
