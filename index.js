@@ -163,7 +163,9 @@ function algo() {
     //management of main search bar
     inputMain.addEventListener("input", () => {
         if (!checkInput(inputMain)) {
-            if (inputMain.value.length > 2) {
+            noRecipe.innerHTML = '';
+            noRecipe.style.padding = '0';
+            if (inputMain.value.length > 2) {                
                 displayCardRecipes(alreadySelect);
                 recipeFiltered = [];
                 recipeToDisplay = [];
@@ -185,17 +187,13 @@ function algo() {
                     noRecipe.style.padding = '50px';
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
                     tarte aux pommes », « poisson », etc.`;
-                } else {
-                    noRecipe.innerHTML = '';
-                    noRecipe.style.padding = '0';
-                }
+                } 
                 generateCardRecipe(recipeToDisplay);
                 sortList(recipeToDisplay);
                 selectSortOption();
             } else {
+                
                 displayCardRecipes(alreadySelect);
-                noRecipe.innerHTML = '';
-                noRecipe.style.padding = '0';
             }
         }
     })
@@ -210,6 +208,8 @@ function algo() {
         let selectList = selectDiv.querySelector('.main__sort__list__ul');
         let listId = selectList.id;
         el.addEventListener("input", () => {
+            noRecipe.innerHTML = '';
+            noRecipe.style.padding = '0';
             displayCardRecipes(alreadySelect);
             tags = [];
             tagsToDisplay = [];
@@ -243,17 +243,12 @@ function algo() {
                         tagsRecipeToDisplay.push(els);
                     }
                 });
-                
+
             if (tagsToDisplay.length == 0) {
                 noRecipe.style.padding = '50px';
                 noRecipe.innerHTML = `Aucune filtre ne correspond à "${el.value}"`;               
-            } else {
-                noRecipe.innerHTML = '';
-                noRecipe.style.padding = '0';                
-            }
+            } 
             if (el.value.length == 0) {
-                noRecipe.innerHTML = '';
-                noRecipe.style.padding = '0';
                 displayCardRecipes(alreadySelect);
             } else {
                 displaySortList(tagsToDisplay, listId);
