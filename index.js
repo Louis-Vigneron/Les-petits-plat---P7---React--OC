@@ -169,6 +169,8 @@ function algo() {
                 displayCardRecipes(alreadySelect);
                 recipeFiltered = [];
                 recipeToDisplay = [];
+
+                //create array with recipes already display
                 let displayCard = document.querySelectorAll('.main__recipes__card');
                 recipes.forEach(el => {
                     displayCard.forEach(els => {
@@ -176,13 +178,9 @@ function algo() {
                             recipeFiltered.push(el);
                         }
                     })
-                });
-                recipeFiltered.forEach(el => {
-                    let jsonRecipe = JSON.stringify(el).toLowerCase();
-                    if (jsonRecipe.includes(inputMain.value.toLowerCase())) {
-                        recipeToDisplay.push(el);
-                    }
-                });
+                });          
+            
+                recipeToDisplay = recipeFiltered.filter(item => JSON.stringify(item).toLowerCase().includes(inputMain.value.toLowerCase()));                
                 if (recipeToDisplay.length == 0) {
                     noRecipe.style.padding = '50px';
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
@@ -191,13 +189,11 @@ function algo() {
                 generateCardRecipe(recipeToDisplay);
                 sortList(recipeToDisplay);
                 selectSortOption();
-            } else {
-                
+            } else {                
                 displayCardRecipes(alreadySelect);
             }
         }
     })
-
     //management of tags search bar
     let tags = []
     let tagsToDisplay = [];
@@ -217,17 +213,13 @@ function algo() {
             tagsRecipeFiltered = [];
             let selectTags = selectList.querySelectorAll('li');
 
+            // create array with tags already display            
             selectTags.forEach(els => {
                 tags.push(els.id);
             })
 
             if (!checkInput(el)) {
-                tags.forEach(els => {
-                    let jsonTag = JSON.stringify(els).toLowerCase();
-                    if (jsonTag.includes(el.value.toLowerCase())) {
-                        tagsToDisplay.push(els);
-                    }
-                })                       
+                tagsToDisplay = tags.filter(item => JSON.stringify(item).toLowerCase().includes(el.value.toLowerCase()));                                     
 
                 let displayCard = document.querySelectorAll('.main__recipes__card');
                 recipes.forEach(els => {
@@ -237,12 +229,7 @@ function algo() {
                         }
                     })
                 });
-                tagsRecipeFiltered.forEach(els => {
-                    let jsonRecipe = JSON.stringify(els[listId]).toLowerCase();
-                    if (jsonRecipe.includes(el.value.toLowerCase())) {
-                        tagsRecipeToDisplay.push(els);
-                    }
-                });
+                tagsRecipeToDisplay = tagsRecipeFiltered.filter(item => JSON.stringify(item[listId]).toLowerCase().includes(el.value.toLowerCase())); 
 
             if (tagsToDisplay.length == 0) {
                 noRecipe.style.padding = '50px';
