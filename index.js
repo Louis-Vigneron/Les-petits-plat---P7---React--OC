@@ -155,6 +155,7 @@ function displayCardRecipes(filterArray) {
 //function to search for items when typing in the search bar
 function algo() {
     let displayRecipe = [];
+    let filteredRecipe = [];
     const inputMain = document.getElementById("search");
     const inputTag = document.querySelectorAll('.searchBar');
     const noRecipe = document.getElementById('noRecipes');
@@ -162,26 +163,36 @@ function algo() {
     //mange main search bar
     inputMain.addEventListener("input", () => {
         if (!checkInput(inputMain)) {
+            noRecipe.innerHTML = '';
+            noRecipe.style.padding = '0';
             if (inputMain.value.length > 2) {
                 displayRecipe = [];
-                for (let y = 0; alreadySelect.length > y; y++) {
-                    displayRecipe.push(alreadySelect[y])
+                filteredRecipe = [];
+                for (let y = 0; recipes.length > y; y++) {
+                    if (alreadySelect.length == 0) {
+                        filteredRecipe.push(recipes[y])
+                    } else {
+                        for (let z = 0; alreadySelect.length > z; z++) {
+                            if (JSON.stringify(recipes[y]).toLowerCase().includes(alreadySelect[z].toLowerCase())) {
+                                filteredRecipe.push(recipes[y])
+                            }
+                        }
+                    }
                 }
-                displayRecipe.push(inputMain.value.toLowerCase());
-                displayCardRecipes(displayRecipe);
-                let cardRecipe = document.querySelectorAll('.main__recipes__card');
-                if (cardRecipe.length == 0) {
+                for (let x = 0; filteredRecipe.length > x; x++) {
+                    if (JSON.stringify(filteredRecipe[x]).toLowerCase().includes(inputMain.value.toLowerCase())) {
+                        displayRecipe.push(filteredRecipe[x])
+                    }
+                }
+                if (displayRecipe.length == 0) {
                     noRecipe.style.padding = '50px';
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
                     tarte aux pommes », « poisson », etc.`;
-                } else {
-                    noRecipe.innerHTML = '';
-                    noRecipe.style.padding = '0';
                 }
-
+                generateCardRecipe(displayRecipe);
+                sortList(displayRecipe);
+                selectSortOption();
             } else {
-                noRecipe.innerHTML = '';
-                noRecipe.style.padding = '0';
                 displayCardRecipes(alreadySelect);
             }
         }
@@ -190,40 +201,58 @@ function algo() {
     //manage tags search bar 
     let tags = [];
     let filteredTags = [];
+    let tagsRecipeToDisplay = [];
+    let filteredRecipeTags = [];
     for (let x = 0; inputTag.length > x; x++) {
+        let selectDiv = inputTag[x].closest("div");
+        let selectUl = selectDiv.querySelector('ul');
         inputTag[x].addEventListener("input", () => {
-            if (!checkInput(inputMain)) {
-                displayCardRecipes(alreadySelect);
-                tags = [];
-                displayRecipe = [];
-                filteredTags = [];
-                let selectDiv = inputTag[x].closest("div");
-                let selectUl = selectDiv.querySelector('ul');
+            displayCardRecipes(alreadySelect);
+            if (!checkInput(inputTag[x])) {                
                 let selectList = selectDiv.querySelectorAll('li');
+                noRecipe.innerHTML = '';
+                noRecipe.style.padding = '0';
+                tags = [];
+                filteredTags = [];
+                tagsRecipeToDisplay = [];
+                filteredRecipeTags = [];
                 for (let n = 0; selectList.length > n; n++) {
                     tags.push(selectList[n].textContent);
                 }
-                for (let y = 0; alreadySelect.length > y; y++) {
-                    displayRecipe.push(alreadySelect[y]);
-                }
-                for (let o = 0; tags.length > o; o++) {
-                    if (tags[o].toLowerCase().includes(inputTag[x].value.toLowerCase())) {
-                        if (!filteredTags.includes(tags[o])) {
-                            filteredTags.push(tags[o]);
-                            displayRecipe.push(inputTag[x].value.toLowerCase());
+                 for (let m = 0; tags.length > m; m++) { 
+                    if(tags[m].toLowerCase().includes(inputTag[x].value.toLowerCase())){
+                         filteredTags.push(tags[m]) 
+                    }                                     
+                } 
+               
+                for (let y = 0; recipes.length > y; y++) {
+                    if (alreadySelect.length == 0) {
+                        filteredRecipeTags.push(recipes[y])
+                    } else {
+                        for (let z = 0; alreadySelect.length > z; z++) {
+                            if (JSON.stringify(recipes[y]).toLowerCase().includes(alreadySelect[z].toLowerCase())) {
+                                filteredRecipeTags.push(recipes[y])
+                            }
                         }
                     }
                 }
-                if (filteredTags.length == 0) {
-                    noRecipe.style.padding = '50px';
-                    noRecipe.innerHTML = `Aucune filtre ne correspond à "${inputTag[x].value}"`;
-                } else {
-                    noRecipe.innerHTML = '';
-                    noRecipe.style.padding = '0';
-                    displayCardRecipes(displayRecipe);
-                    displaySortList(filteredTags, selectUl.id);
-                    selectSortOption();
+
+                for (let o = 0; filteredRecipeTags.length > o; o++) {
+                    if (filteredTags.length == 0) {
+                        noRecipe.style.padding = '50px';
+                        noRecipe.innerHTML = `Aucune filtre ne correspond à "${inputTag[x].value}"`;
+                    } else {
+                        for (let i = 0; filteredTags.length > i; i++) {
+                            if (JSON.stringify(filteredRecipeTags[o][selectUl.id]).toLowerCase().includes(filteredTags[i].toLowerCase())) {
+                                if (!tagsRecipeToDisplay.includes(filteredRecipeTags[o]))
+                                    tagsRecipeToDisplay.push(filteredRecipeTags[o])
+                            }
+                        }
+                    }
                 }
+                    displaySortList(filteredTags, selectUl.id);
+                    generateCardRecipe(tagsRecipeToDisplay);
+                    selectSortOption();
             }
         })
     }
