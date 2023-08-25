@@ -315,7 +315,7 @@ function sortList(array) {
 
 //function regex to control input user
 function checkInput(nodeDuChamp) {
-    let regexTest = /^[A-Za-z]{0,20}$/
+    let regexTest = /^[a-zA-Z\s'àáâãäåçèéêëìíîïðòóôõöùúûüýÿ\s']+$/
     if (!nodeDuChamp.value || !regexTest.test(nodeDuChamp.value)) {
         return true;
     }
