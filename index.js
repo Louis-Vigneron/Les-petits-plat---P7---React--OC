@@ -165,12 +165,10 @@ function algo() {
         if (!checkInput(inputMain)) {
             noRecipe.innerHTML = '';
             noRecipe.style.padding = '0';
-            if (inputMain.value.length > 2) {                
+            if (inputMain.value.length > 2) {
                 displayCardRecipes(alreadySelect);
                 recipeFiltered = [];
                 recipeToDisplay = [];
-
-                //create array with recipes already display
                 let displayCard = document.querySelectorAll('.main__recipes__card');
                 recipes.forEach(el => {
                     displayCard.forEach(els => {
@@ -178,18 +176,17 @@ function algo() {
                             recipeFiltered.push(el);
                         }
                     })
-                });          
-            
-                recipeToDisplay = recipeFiltered.filter(item => JSON.stringify(item).toLowerCase().includes(inputMain.value.toLowerCase()));                
+                });
+                recipeToDisplay = recipeFiltered.filter(item => JSON.stringify(item).toLowerCase().includes(inputMain.value.toLowerCase()));
                 if (recipeToDisplay.length == 0) {
                     noRecipe.style.padding = '50px';
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
                     tarte aux pommes », « poisson », etc.`;
-                } 
+                }
                 generateCardRecipe(recipeToDisplay);
                 sortList(recipeToDisplay);
                 selectSortOption();
-            } else {                
+            } else {
                 displayCardRecipes(alreadySelect);
             }
         }
@@ -212,15 +209,11 @@ function algo() {
             tagsRecipeToDisplay = [];
             tagsRecipeFiltered = [];
             let selectTags = selectList.querySelectorAll('li');
-
-            // create array with tags already display            
             selectTags.forEach(els => {
                 tags.push(els.id);
             })
-
             if (!checkInput(el)) {
-                tagsToDisplay = tags.filter(item => JSON.stringify(item).toLowerCase().includes(el.value.toLowerCase()));                                     
-
+                tagsToDisplay = tags.filter(item => JSON.stringify(item).toLowerCase().includes(el.value.toLowerCase()));
                 let displayCard = document.querySelectorAll('.main__recipes__card');
                 recipes.forEach(els => {
                     displayCard.forEach(elss => {
@@ -229,20 +222,15 @@ function algo() {
                         }
                     })
                 });
-                tagsRecipeToDisplay = tagsRecipeFiltered.filter(item => JSON.stringify(item[listId]).toLowerCase().includes(el.value.toLowerCase())); 
-
-            if (tagsToDisplay.length == 0) {
-                noRecipe.style.padding = '50px';
-                noRecipe.innerHTML = `Aucune filtre ne correspond à "${el.value}"`;               
-            } 
-            if (el.value.length == 0) {
-                displayCardRecipes(alreadySelect);
-            } else {
+                tagsRecipeToDisplay = tagsRecipeFiltered.filter(item => JSON.stringify(item[listId]).toLowerCase().includes(el.value.toLowerCase()));
+                if (tagsToDisplay.length == 0) {
+                    noRecipe.style.padding = '50px';
+                    noRecipe.innerHTML = `Aucune filtre ne correspond à "${el.value}"`;
+                }
                 displaySortList(tagsToDisplay, listId);
-                generateCardRecipe(tagsRecipeToDisplay)
-            }            
-            selectSortOption();
-        } 
+                generateCardRecipe(tagsRecipeToDisplay);
+                selectSortOption();
+            }
         })
     })
 }
