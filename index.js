@@ -28,8 +28,6 @@ function displaySortOptions() {
             class="fa-solid fa-chevron-up"></i>`
         })
     })
-
-
 }
 
 //function for select and display tag selected
@@ -84,7 +82,6 @@ function cleanOptionSelect() {
             }
             selectSortOption();
         })
-
     })
 }
 
