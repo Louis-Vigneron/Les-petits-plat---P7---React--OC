@@ -31,11 +31,10 @@ function displaySortOptions() {
 }
 
 //function for select and display tag selected
-let alreadySelect = [];
+let alreadySelect = [""];
 function selectSortOption() {
     const options = document.querySelectorAll('[role="listbox"]');
     const displayOption = document.getElementById('selectedOption');
-    const cleanMainBar = document.getElementById('search');
     options.forEach(el => {
         el.addEventListener("click", () => {
             let listOptions = el.closest("ul");
@@ -55,7 +54,6 @@ function selectSortOption() {
                 cleanOptionSelect();
                 displayCardRecipes(alreadySelect);
                 selectInputClean.value = '';
-                cleanMainBar.value = '';
             }
         })
     });
@@ -157,28 +155,28 @@ function algo() {
     const inputTag = document.querySelectorAll('.searchBar');
     const noRecipe = document.getElementById('noRecipes');
 
+
+
     //mange main search bar
     inputMain.addEventListener("input", () => {
         if (!checkInput(inputMain)) {
             noRecipe.innerHTML = '';
             noRecipe.style.padding = '0';
             if (inputMain.value.length > 2) {
+                displayCardRecipes(alreadySelect);
                 displayRecipe = [];
                 filteredRecipe = [];
                 for (let y = 0; recipes.length > y; y++) {
-                    if (alreadySelect.length == 0) {
-                        filteredRecipe.push(recipes[y])
-                    } else {
-                        for (let z = 0; alreadySelect.length > z; z++) {
-                            if (JSON.stringify(recipes[y]).toLowerCase().includes(alreadySelect[z].toLowerCase())) {
-                                filteredRecipe.push(recipes[y])
-                            }
-                        }
+                    if (alreadySelect.every(item => JSON.stringify(recipes[y]).toLowerCase().includes(item.toLowerCase()))) {
+                        if (!filteredRecipe.includes(recipes[y]))
+                            filteredRecipe.push(recipes[y])
                     }
                 }
                 for (let x = 0; filteredRecipe.length > x; x++) {
                     if (JSON.stringify(filteredRecipe[x]).toLowerCase().includes(inputMain.value.toLowerCase())) {
-                        displayRecipe.push(filteredRecipe[x])
+                        if (!displayRecipe.includes(filteredRecipe[x])) {
+                            displayRecipe.push(filteredRecipe[x])
+                        }
                     }
                 }
                 if (displayRecipe.length == 0) {
@@ -186,10 +184,12 @@ function algo() {
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
                     tarte aux pommes », « poisson », etc.`;
                 }
+                alreadySelect.splice(0, 1, inputMain.value.toLowerCase())
                 generateCardRecipe(displayRecipe);
                 sortList(displayRecipe);
                 selectSortOption();
             } else {
+                alreadySelect.splice(0, 1, "")
                 displayCardRecipes(alreadySelect);
             }
         }
@@ -199,20 +199,18 @@ function algo() {
     let tags = [];
     let filteredTags = [];
     let tagsRecipeToDisplay = [];
-    let filteredRecipeTags = [];
     for (let x = 0; inputTag.length > x; x++) {
         let selectDiv = inputTag[x].closest("div");
         let selectUl = selectDiv.querySelector('ul');
         inputTag[x].addEventListener("input", () => {
+            noRecipe.innerHTML = '';
+            noRecipe.style.padding = '0';
             displayCardRecipes(alreadySelect);
             if (!checkInput(inputTag[x])) {
                 let selectList = selectDiv.querySelectorAll('li');
-                noRecipe.innerHTML = '';
-                noRecipe.style.padding = '0';
                 tags = [];
                 filteredTags = [];
                 tagsRecipeToDisplay = [];
-                filteredRecipeTags = [];
                 for (let n = 0; selectList.length > n; n++) {
                     tags.push(selectList[n].textContent);
                 }
@@ -221,28 +219,16 @@ function algo() {
                         filteredTags.push(tags[m])
                     }
                 }
-
-                for (let y = 0; recipes.length > y; y++) {
-                    if (alreadySelect.length == 0) {
-                        filteredRecipeTags.push(recipes[y])
-                    } else {
-                        for (let z = 0; alreadySelect.length > z; z++) {
-                            if (JSON.stringify(recipes[y]).toLowerCase().includes(alreadySelect[z].toLowerCase())) {
-                                filteredRecipeTags.push(recipes[y])
-                            }
-                        }
-                    }
-                }
-
-                for (let o = 0; filteredRecipeTags.length > o; o++) {
+                if (displayRecipe.length == 0) displayRecipe = recipes
+                for (let o = 0; displayRecipe.length > o; o++) {
                     if (filteredTags.length == 0) {
                         noRecipe.style.padding = '50px';
                         noRecipe.innerHTML = `Aucune filtre ne correspond à "${inputTag[x].value}"`;
                     } else {
                         for (let i = 0; filteredTags.length > i; i++) {
-                            if (JSON.stringify(filteredRecipeTags[o][selectUl.id]).toLowerCase().includes(filteredTags[i].toLowerCase())) {
-                                if (!tagsRecipeToDisplay.includes(filteredRecipeTags[o]))
-                                    tagsRecipeToDisplay.push(filteredRecipeTags[o])
+                            if (JSON.stringify(displayRecipe[o][selectUl.id]).toLowerCase().includes(filteredTags[i].toLowerCase())) {
+                                if (!tagsRecipeToDisplay.includes(displayRecipe[o]))
+                                    tagsRecipeToDisplay.push(displayRecipe[o])
                             }
                         }
                     }
@@ -263,6 +249,7 @@ function resetButton() {
         el.addEventListener("click", () => {
             noRecipe.style.padding = '0';
             noRecipe.innerHTML = "";
+            if (el.className == "header__search__reset") alreadySelect.splice(0, 1, "");
             displayCardRecipes(alreadySelect);
         })
     })
