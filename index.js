@@ -33,11 +33,10 @@ function displaySortOptions() {
 }
 
 //function for select and display tag selected
-let alreadySelect = [];
+let alreadySelect = [""];
 function selectSortOption() {
     const options = document.querySelectorAll('[role="listbox"]');
     const displayOption = document.getElementById('selectedOption');
-    const cleanMainBar = document.getElementById('search');
     options.forEach(el => {
         el.addEventListener("click", () => {
             let listOptions = el.closest("ul");
@@ -56,7 +55,6 @@ function selectSortOption() {
                 cleanOptionSelect();
                 displayCardRecipes(alreadySelect);
                 selectInputClean.value = '';
-                cleanMainBar.value = '';
             }
         })
     });
@@ -183,10 +181,12 @@ function algo() {
                     noRecipe.innerHTML = `Aucune recette ne contient "${inputMain.value}" vous pouvez chercher «
                     tarte aux pommes », « poisson », etc.`;
                 }
+                alreadySelect.splice(0, 1, inputMain.value.toLowerCase())
                 generateCardRecipe(recipeToDisplay);
                 sortList(recipeToDisplay);
                 selectSortOption();
             } else {
+                alreadySelect.splice(0, 1, "");
                 displayCardRecipes(alreadySelect);
             }
         }
@@ -243,6 +243,7 @@ function resetButton() {
         el.addEventListener("click", () => {
             noRecipe.style.padding = '0';
             noRecipe.innerHTML = "";
+            if (el.className == "header__search__reset") alreadySelect.splice(0, 1, "");
             displayCardRecipes(alreadySelect);
         })
     })
